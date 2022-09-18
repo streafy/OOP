@@ -1,6 +1,16 @@
 package ru.nsu.fit;
 
+import java.util.Scanner;
+
+/**
+ * Heapsort implementation.
+ * @author Ivan Badin
+ */
 public class Heapsort {
+    /**
+     * Sorts array using Heapsort.
+     * @param arr - input array
+     */
     public static void sort(int[] arr) {
         int n = arr.length;
 
@@ -46,8 +56,21 @@ public class Heapsort {
         System.out.println();
     }
 
+    /**
+     * Method to read array from user input, apply sort and print it to standard output.
+     * @param args - command line arguments
+     */
     public static void main(String[] args) {
-        int[] arr = { 6, 3, 8, 11, 1 };
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Enter array size:");
+        int size = in.nextInt();
+        int[] arr = new int[size];
+
+        System.out.println("Enter array elements:");
+        for (int i = 0; i < size; i++) {
+            arr[i] = in.nextInt();
+        }
 
         System.out.println("Array before sort:");
         printArr(arr);
