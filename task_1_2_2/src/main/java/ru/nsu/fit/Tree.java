@@ -1,96 +1,83 @@
 package ru.nsu.fit;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class Tree<T> implements Iterable<Tree<T>>{
-    private final List<Tree<T>> children = new ArrayList<>();
-    private Tree<T> parent = null;
-    private T data = null;
+public class Tree<E> implements Iterable<E> {
+    private Node<E> root;
 
-    public int size() {
-        if (data == null) {
-            return 0;
+    private static class Node<T> {
+        private final T elem;
+        private final List<Node<T>> children = new ArrayList<>();
+
+        private Node(T elem) {
+            this.elem = elem;
         }
-        int size = 1;
-        for (Tree<T> child : children) {
-            if (child != null) {
-                size += child.size();
+    }
+
+    private class TreeIterator implements Iterator<E> {
+        private final Stack<Node<E>> stack = new Stack<>();
+
+        public TreeIterator() {
+            if (root != null) {
+                stack.push(root);
             }
         }
-        return size;
-    }
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public Iterator<Tree<T>> iterator() {
-        return new TreeIterator();
-    }
-
-    private class TreeIterator implements Iterator<Tree<T>> {
 
         @Override
         public boolean hasNext() {
-            return !isEmpty();
+            return !stack.isEmpty();
         }
 
         @Override
-        public Tree<T> next() {
-            return children.iterator().next();
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Node<E> node = stack.pop();
+            for (int i = node.children.size() - 1; i >= 0; i--) {
+                stack.push(node.children.get(i));
+            }
+            return node.elem;
         }
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new TreeIterator();
     }
 
     public Tree() {
+        root = null;
     }
 
-    public Tree(T data) {
-        this.data = data;
+    public Tree(E elem) {
+        add(elem);
     }
 
-    public Tree<T> add1(T elem) {
-        if (data == null) {
-            data = elem;
-            return this;
+    private Tree(Node<E> node) {
+        root = node;
+    }
+
+    public Tree<E> add(E elem) {
+        if (elem == null) {
+            throw new IllegalArgumentException("Added element can't be null");
+        }
+
+        Node<E> newNode = new Node<>(elem);
+        if (root == null) {
+            root = newNode;
         } else {
-            Tree<T> newChild = new Tree<>(elem);
-            newChild.parent = this;
-            newChild.data = elem;
-            newChild.parent.children.add(newChild);
-            return newChild;
+            root.children.add(newNode);
         }
+        return new Tree<>(newNode);
     }
 
-    public Tree<T> add1(Tree<T> tree, T elem) {
-        return tree.add1(elem);
+    public Tree<E> add(Tree<E> tree, E elem) {
+        return tree.add(elem);
     }
 
-    public T remove1(T elem) {
-        for (Tree<T> child : children) {
-            if (child.data == elem) {
-                System.out.println("\nremove " + child.data);
-                for (Tree<T> subChild : child.children) {
-                    System.out.println("bind " + subChild.data + " to " + child.parent.data);
-                    subChild.parent = child.parent;
-                }
-                child.parent.children.addAll(child.children);
-                child.parent.children.remove(child);
-                return elem;
-            }
-        }
+    public E remove(E elem) {
+
         return null;
-    }
-
-    //Debug only
-    public void printTree() {
-        System.out.print("\n" + data);
-        for (Tree<T> t : children) {
-            t.printTree();
-        }
     }
 }
