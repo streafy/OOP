@@ -10,8 +10,10 @@ public class Stack<T> {
     private int size = 0;
     private T[] arr;
 
+    private static final int RESIZE_FACTOR = 2;
+
     private void resize() {
-        arr = Arrays.copyOf(arr, arr.length * 2);
+        arr = Arrays.copyOf(arr, arr.length * RESIZE_FACTOR);
     }
 
     /**
@@ -62,9 +64,12 @@ public class Stack<T> {
         if (stack == null) {
             throw new IllegalArgumentException("Stack can't be null");
         }
-        for (int i = 0; i < stack.size; i++) {
-            push(stack.arr[i]);
+
+        if (arr.length < size + stack.size) {
+            resize();
         }
+        System.arraycopy(stack.arr, 0, this.arr, this.size, stack.size);
+        this.size += stack.size;
     }
 
     /**
