@@ -2,6 +2,10 @@ package ru.nsu.fit;
 
 import java.util.*;
 
+/**
+ * Tree data structure implementation.
+ * @param <E> - type of elements that are stored in tree
+ */
 public class Tree<E> implements Iterable<E> {
     private Node<E> root;
 
@@ -41,15 +45,26 @@ public class Tree<E> implements Iterable<E> {
         }
     }
 
+    /**
+     * Creates an iterator over Tree
+     * @return - iterator over Tree
+     */
     @Override
     public Iterator<E> iterator() {
         return new TreeIterator();
     }
 
+    /**
+     * Creates an empty Tree.
+     */
     public Tree() {
         root = null;
     }
 
+    /**
+     * Creates Tree with single element.
+     * @param elem - element added to Tree
+     */
     public Tree(E elem) {
         add(elem);
     }
@@ -58,6 +73,11 @@ public class Tree<E> implements Iterable<E> {
         root = node;
     }
 
+    /**
+     * Adds new element to tree.
+     * @param elem - element added to Tree
+     * @return - Tree with added element
+     */
     public Tree<E> add(E elem) {
         if (elem == null) {
             throw new IllegalArgumentException("Added element can't be null");
@@ -72,12 +92,39 @@ public class Tree<E> implements Iterable<E> {
         return new Tree<>(newNode);
     }
 
+    /**
+     * Adds element to the specific Tree.
+     * @param tree - Tree to which element are added
+     * @param elem - element added to the tree
+     * @return - Tree with added element
+     */
     public Tree<E> add(Tree<E> tree, E elem) {
         return tree.add(elem);
     }
 
+    /**
+     * Removes element from tree and returns it if it was successful.
+     * @param elem - element to be removed
+     * @return - removed element or null if element isn't present
+     */
     public E remove(E elem) {
-
+        if (search(elem)) {
+            // do something
+        }
         return null;
+    }
+
+    /**
+     * Searches for element in tree.
+     * @param elem - element to be found
+     * @return - true if found, false otherwise
+     */
+    public boolean search(E elem) {
+        for (E e : this) {
+            if (e == elem) {
+                return true;
+            }
+        }
+        return false;
     }
 }
