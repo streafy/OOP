@@ -11,6 +11,7 @@ public class Tree<E> implements Iterable<E> {
 
     private static class Node<T> {
         private final T elem;
+        private Node<T> parent;
         private final List<Node<T>> children = new ArrayList<>();
 
         private Node(T elem) {
@@ -87,6 +88,7 @@ public class Tree<E> implements Iterable<E> {
         if (root == null) {
             root = newNode;
         } else {
+            newNode.parent = root;
             root.children.add(newNode);
         }
         return new Tree<>(newNode);
@@ -108,8 +110,25 @@ public class Tree<E> implements Iterable<E> {
      * @return - removed element or null if element isn't present
      */
     public E remove(E elem) {
-        if (search(elem)) {
-            // do something
+        Stack<Node<E>> stack = new Stack<>();
+        if (root != null) {
+            stack.push(root);
+        }
+        while (!stack.isEmpty()) {
+            Node<E> node = stack.pop();
+
+            if (node.elem == elem) {
+                node.parent.children.addAll(node.children);
+                node.parent.children.remove(node);
+                for (Node<E> nodeChild : node.children) {
+                    nodeChild.parent = node.parent;
+                }
+                return elem;
+            }
+
+            for (int i = node.children.size() - 1; i >= 0; i--) {
+                stack.push(node.children.get(i));
+            }
         }
         return null;
     }
