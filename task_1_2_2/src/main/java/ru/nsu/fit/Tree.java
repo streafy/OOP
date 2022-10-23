@@ -34,11 +34,21 @@ public class Tree<E> implements Collection<E> {
             }
         }
 
+        /**
+         * Checks if Tree has next element
+         *
+         * @return true if Tree has next element, false otherwise
+         */
         @Override
         public boolean hasNext() {
             return !stack.isEmpty();
         }
 
+        /**
+         * Returns next element from the Tree
+         *
+         * @return next element from the Tree
+         */
         @Override
         public E next() {
             if (!hasNext()) {
@@ -52,6 +62,9 @@ public class Tree<E> implements Collection<E> {
             return node.elem;
         }
 
+        /**
+         * Removes element from the Tree
+         */
         @Override
         public void remove() {
             size--;
@@ -81,11 +94,21 @@ public class Tree<E> implements Collection<E> {
             }
         }
 
+        /**
+         * Checks if Tree has next element
+         *
+         * @return true if Tree has next element, false otherwise
+         */
         @Override
         public boolean hasNext() {
             return !queue.isEmpty();
         }
 
+        /**
+         * Returns next element from the Tree
+         *
+         * @return next element from the Tree
+         */
         @Override
         public E next() {
             if (!hasNext()) {
@@ -97,6 +120,9 @@ public class Tree<E> implements Collection<E> {
             return node.elem;
         }
 
+        /**
+         * Removes element from the Tree
+         */
         @Override
         public void remove() {
             if (lastVisited.parent == null) {
@@ -119,6 +145,10 @@ public class Tree<E> implements Collection<E> {
     @Override
     public Iterator<E> iterator() {
         return new DFSIterator();
+    }
+
+    public Iterator<E> BFSIterator() {
+        return new BFSIterator();
     }
 
     /**

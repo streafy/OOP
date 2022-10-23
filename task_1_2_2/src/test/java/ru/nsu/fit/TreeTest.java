@@ -3,6 +3,8 @@ package ru.nsu.fit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 public class TreeTest {
 
     Tree<String> createTestTree() {
@@ -23,12 +25,18 @@ public class TreeTest {
         Tree<String> tree = createTestTree();
 
         int i = 0;
-        String[] testStrings = {"root", "A", "AB", "ABC", "B", "BB", "C", "CB", "D"};
-        //BFS
-        //String[] testStrings = {"root", "A", "B", "C", "D", "AB", "BB", "CB", "ABC" };
+        String[] testStringsDFS = {"root", "A", "AB", "ABC", "B", "BB", "C", "CB", "D"};
 
         for (String s : tree) {
-            Assertions.assertEquals(testStrings[i++], s);
+            Assertions.assertEquals(testStringsDFS[i++], s);
+        }
+
+        i = 0;
+        String[] testStringsBFS = {"root", "A", "B", "C", "D", "AB", "BB", "CB", "ABC"};
+        Iterator<String> iterator = tree.BFSIterator();
+        while (iterator.hasNext()) {
+            String elem = iterator.next();
+            Assertions.assertEquals(testStringsBFS[i++], elem);
         }
     }
 
@@ -74,5 +82,17 @@ public class TreeTest {
         Tree<String> tree1 = new Tree<>("A");
         tree1.add("B");
         Assertions.assertTrue(tree.containsAll(tree1));
+
+        Tree<String> tree2 = new Tree<>("BB");
+        tree2.addAll(tree1);
+        Assertions.assertTrue(tree.containsAll(tree2));
+    }
+
+    @Test
+    void testToArr() {
+        Tree<String> tree = createTestTree();
+
+        String[] testStringsDFS = {"root", "A", "AB", "ABC", "B", "BB", "C", "CB", "D"};
+        Assertions.assertArrayEquals(testStringsDFS, tree.toArray());
     }
 }
