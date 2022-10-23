@@ -7,8 +7,9 @@ import java.util.*;
  *
  * @param <E> - type of elements that are stored in tree
  */
-public class Tree<E> implements Iterable<E> {
+public class Tree<E> implements Collection<E> {
     private Node<E> root;
+    private int size = 0;
 
     private static class Node<T> {
         private final T elem;
@@ -62,6 +63,45 @@ public class Tree<E> implements Iterable<E> {
     }
 
     /**
+     * BFS Iterator over Tree
+     */
+    private class BFSIterator implements Iterator<E> {
+        private final Deque<Node<E>> queue = new ArrayDeque<>();
+        private Node<E> lastVisited;
+
+        public BFSIterator() {
+            if (root != null) {
+                queue.add(root);
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !queue.isEmpty();
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Node<E> node = queue.poll();
+            lastVisited = node;
+            queue.addAll(node.children);
+            return node.elem;
+        }
+
+        @Override
+        public void remove() {
+            lastVisited.parent.children.addAll(lastVisited.children);
+            lastVisited.parent.children.remove(lastVisited);
+            for (Node<E> nodeChild : lastVisited.children) {
+                nodeChild.parent = lastVisited.parent;
+            }
+        }
+    }
+
+    /**
      * Creates an iterator over Tree
      *
      * @return - iterator over Tree
@@ -69,6 +109,16 @@ public class Tree<E> implements Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new DFSIterator();
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
     }
 
     /**
@@ -95,21 +145,12 @@ public class Tree<E> implements Iterable<E> {
      * Adds new element to tree.
      *
      * @param elem - element added to Tree
-     * @return - Tree with added element
+     * @return - true
      */
-    public Tree<E> add(E elem) {
-        if (elem == null) {
-            throw new IllegalArgumentException("Added element can't be null");
-        }
-
-        Node<E> newNode = new Node<>(elem);
-        if (root == null) {
-            root = newNode;
-        } else {
-            newNode.parent = root;
-            root.children.add(newNode);
-        }
-        return new Tree<>(newNode);
+    @Override
+    public boolean add(E elem) {
+        add(this, elem);
+        return true;
     }
 
     /**
@@ -120,7 +161,19 @@ public class Tree<E> implements Iterable<E> {
      * @return - Tree with added element
      */
     public Tree<E> add(Tree<E> tree, E elem) {
-        return tree.add(elem);
+        if (elem == null) {
+            throw new IllegalArgumentException("Added element can't be null");
+        }
+
+        Node<E> newNode = new Node<>(elem);
+        if (tree.root == null) {
+            tree.root = newNode;
+        } else {
+            newNode.parent = tree.root;
+            tree.root.children.add(newNode);
+        }
+        size++;
+        return new Tree<>(newNode);
     }
 
     /**
@@ -129,16 +182,18 @@ public class Tree<E> implements Iterable<E> {
      * @param elem - element to be removed
      * @return - removed element or null if element isn't present
      */
-    public E remove(E elem) {
+    @Override
+    public boolean remove(Object elem) {
         Iterator<E> i = iterator();
         while (i.hasNext()) {
             E e = i.next();
             if (e == elem) {
                 i.remove();
-                return elem;
+                size--;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     /**
@@ -147,12 +202,110 @@ public class Tree<E> implements Iterable<E> {
      * @param elem - element to be found
      * @return - true if found, false otherwise
      */
-    public boolean contains(E elem) {
+    @Override
+    public boolean contains(Object elem) {
         for (E e : this) {
             if (e == elem) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if all elements of another collection contain in collection
+     *
+     * @param c collection to be checked for containment in this collection
+     * @return - true if all elements of another collections contain in collection, false otherwise
+     */
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return c.stream().allMatch(this::contains);
+    }
+
+    /**
+     * Adds to collection elements from another collection
+     *
+     * @param c collection containing elements to be added to this collection
+     * @return - true
+     */
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        for (E elem : c) {
+            add(elem);
+        }
+        return true;
+    }
+
+    /**
+     * Removes elements from collection that are contained in other collection
+     *
+     * @param c collection containing elements to be removed from this collection
+     * @return - true if collection changed and false otherwise
+     */
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        boolean isChanged = false;
+        Iterator<E> i = iterator();
+        while (i.hasNext()) {
+            E e = i.next();
+            if (c.contains(e)) {
+                i.remove();
+                isChanged = true;
+            }
+        }
+        return isChanged;
+    }
+
+    /**
+     * Removes elements from collection that are not contained in other collection
+     *
+     * @param c - collection containing elements to be retained in this collection
+     * @return - true if collection changed and false otherwise
+     */
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        boolean isChanged = false;
+        Iterator<E> i = iterator();
+        while (i.hasNext()) {
+            E e = i.next();
+            if (!c.contains(e)) {
+                i.remove();
+                isChanged = true;
+            }
+        }
+        return isChanged;
+    }
+
+    /**
+     * Removes all nodes from Tree
+     */
+    @Override
+    public void clear() {
+        Iterator<E> i = iterator();
+        while (i.hasNext()) {
+            i.next();
+            i.remove();
+        }
+    }
+
+    /**
+     * Returns number of nodes in Tree
+     *
+     * @return - number of nodes in Tree
+     */
+    @Override
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Checks if Tree is empty
+     *
+     * @return - true if Tree is empty and false otherwise
+     */
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 }
