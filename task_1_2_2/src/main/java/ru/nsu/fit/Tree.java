@@ -138,7 +138,7 @@ public class Tree<E> implements Collection<E> {
     }
 
     /**
-     * Creates an iterator over Tree
+     * Creates an DFS iterator over Tree
      *
      * @return iterator over Tree
      */
@@ -147,6 +147,11 @@ public class Tree<E> implements Collection<E> {
         return new DFSIterator();
     }
 
+    /**
+     * Creates an BFS iterator over Tree
+     *
+     * @return iterator over Tree
+     */
     public Iterator<E> BFSIterator() {
         return new BFSIterator();
     }
@@ -181,7 +186,10 @@ public class Tree<E> implements Collection<E> {
         if (a.length < size) {
             a = (T[]) new Object[size];
         }
-        a = (T[]) toArray();
+        int i = 0;
+        for (E elem : this) {
+            a[i++] = (T) elem;
+        }
         return a;
     }
 

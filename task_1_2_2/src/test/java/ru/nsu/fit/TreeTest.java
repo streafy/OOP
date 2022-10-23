@@ -3,6 +3,7 @@ package ru.nsu.fit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class TreeTest {
@@ -79,7 +80,8 @@ public class TreeTest {
 
         Assertions.assertTrue(tree.contains("A"));
 
-        Tree<String> tree1 = new Tree<>("A");
+        Tree<String> tree1 = new Tree<>();
+        tree1.add("A");
         tree1.add("B");
         Assertions.assertTrue(tree.containsAll(tree1));
 
@@ -94,5 +96,25 @@ public class TreeTest {
 
         String[] testStringsDFS = {"root", "A", "AB", "ABC", "B", "BB", "C", "CB", "D"};
         Assertions.assertArrayEquals(testStringsDFS, tree.toArray());
+
+        String[] strArr = new String[tree.size()];
+        tree.toArray(strArr);
+        Assertions.assertArrayEquals(testStringsDFS, strArr);
+    }
+
+    @Test
+    void restRetainAll() {
+        Tree<String> tree = createTestTree();
+
+        String[] testStrings = {"root", "A", "B", "C", "D"};
+
+        Tree<String> tree1 = new Tree<>("root");
+        tree1.add("A");
+        tree1.add("B");
+        tree1.add("C");
+        tree1.add("D");
+        tree.retainAll(tree1);
+
+        Assertions.assertArrayEquals(testStrings, tree1.toArray());
     }
 }
