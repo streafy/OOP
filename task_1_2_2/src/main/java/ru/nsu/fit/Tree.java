@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Tree data structure implementation.
  *
- * @param <E> - type of elements that are stored in tree
+ * @param <E> type of elements that are stored in tree
  */
 public class Tree<E> implements Collection<E> {
     private Node<E> root;
@@ -54,10 +54,15 @@ public class Tree<E> implements Collection<E> {
 
         @Override
         public void remove() {
-            lastVisited.parent.children.addAll(lastVisited.children);
-            lastVisited.parent.children.remove(lastVisited);
-            for (Node<E> nodeChild : lastVisited.children) {
-                nodeChild.parent = lastVisited.parent;
+            size--;
+            if (lastVisited.parent != null) {
+                lastVisited.parent.children.addAll(lastVisited.children);
+                lastVisited.parent.children.remove(lastVisited);
+            }
+            if (lastVisited != null) {
+                for (Node<E> nodeChild : lastVisited.children) {
+                    nodeChild.parent = lastVisited.parent;
+                }
             }
         }
     }
@@ -71,6 +76,7 @@ public class Tree<E> implements Collection<E> {
 
         public BFSIterator() {
             if (root != null) {
+                lastVisited = root;
                 queue.add(root);
             }
         }
@@ -93,32 +99,60 @@ public class Tree<E> implements Collection<E> {
 
         @Override
         public void remove() {
+            if (lastVisited.parent == null) {
+                return;
+            }
             lastVisited.parent.children.addAll(lastVisited.children);
             lastVisited.parent.children.remove(lastVisited);
             for (Node<E> nodeChild : lastVisited.children) {
                 nodeChild.parent = lastVisited.parent;
             }
+            size--;
         }
     }
 
     /**
      * Creates an iterator over Tree
      *
-     * @return - iterator over Tree
+     * @return iterator over Tree
      */
     @Override
     public Iterator<E> iterator() {
         return new DFSIterator();
     }
 
+    /**
+     * Returns array that contains all elements of Tree
+     *
+     * @return array that contains all elements of Tree
+     */
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] arr = new Object[size];
+        int i = 0;
+        for (E elem : this) {
+            arr[i++] = elem;
+        }
+        return arr;
     }
 
+    /**
+     * Returns array that contains all elements of Tree
+     *
+     * @param a   the array into which the elements of this collection are to be
+     *            stored, if it is big enough; otherwise, a new array of the same
+     *            runtime type is allocated for this purpose.
+     * @param <T> type of elements in array
+     * @return array that contains all elements of Tree
+     */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a) {
-        return null;
+        if (a.length < size) {
+            a = (T[]) new Object[size];
+        }
+        a = (T[]) toArray();
+        return a;
     }
 
     /**
@@ -131,7 +165,7 @@ public class Tree<E> implements Collection<E> {
     /**
      * Creates Tree with single element.
      *
-     * @param elem - element added to Tree
+     * @param elem element added to Tree
      */
     public Tree(E elem) {
         add(elem);
@@ -144,8 +178,8 @@ public class Tree<E> implements Collection<E> {
     /**
      * Adds new element to tree.
      *
-     * @param elem - element added to Tree
-     * @return - true
+     * @param elem element added to Tree
+     * @return true
      */
     @Override
     public boolean add(E elem) {
@@ -156,9 +190,9 @@ public class Tree<E> implements Collection<E> {
     /**
      * Adds element to the specific Tree.
      *
-     * @param tree - Tree to which element are added
-     * @param elem - element added to the tree
-     * @return - Tree with added element
+     * @param tree Tree to which element are added
+     * @param elem element added to the tree
+     * @return Tree with added element
      */
     public Tree<E> add(Tree<E> tree, E elem) {
         if (elem == null) {
@@ -179,8 +213,8 @@ public class Tree<E> implements Collection<E> {
     /**
      * Removes element from tree and returns it if it was successful.
      *
-     * @param elem - element to be removed
-     * @return - removed element or null if element isn't present
+     * @param elem element to be removed
+     * @return removed element or null if element isn't present
      */
     @Override
     public boolean remove(Object elem) {
@@ -189,7 +223,6 @@ public class Tree<E> implements Collection<E> {
             E e = i.next();
             if (e == elem) {
                 i.remove();
-                size--;
                 return true;
             }
         }
@@ -199,8 +232,8 @@ public class Tree<E> implements Collection<E> {
     /**
      * Searches for element in tree.
      *
-     * @param elem - element to be found
-     * @return - true if found, false otherwise
+     * @param elem element to be found
+     * @return true if found, false otherwise
      */
     @Override
     public boolean contains(Object elem) {
@@ -216,7 +249,7 @@ public class Tree<E> implements Collection<E> {
      * Checks if all elements of another collection contain in collection
      *
      * @param c collection to be checked for containment in this collection
-     * @return - true if all elements of another collections contain in collection, false otherwise
+     * @return true if all elements of another collections contain in collection, false otherwise
      */
     @Override
     public boolean containsAll(Collection<?> c) {
@@ -227,7 +260,7 @@ public class Tree<E> implements Collection<E> {
      * Adds to collection elements from another collection
      *
      * @param c collection containing elements to be added to this collection
-     * @return - true
+     * @return true
      */
     @Override
     public boolean addAll(Collection<? extends E> c) {
@@ -241,7 +274,7 @@ public class Tree<E> implements Collection<E> {
      * Removes elements from collection that are contained in other collection
      *
      * @param c collection containing elements to be removed from this collection
-     * @return - true if collection changed and false otherwise
+     * @return true if collection changed and false otherwise
      */
     @Override
     public boolean removeAll(Collection<?> c) {
@@ -260,8 +293,8 @@ public class Tree<E> implements Collection<E> {
     /**
      * Removes elements from collection that are not contained in other collection
      *
-     * @param c - collection containing elements to be retained in this collection
-     * @return - true if collection changed and false otherwise
+     * @param c collection containing elements to be retained in this collection
+     * @return true if collection changed and false otherwise
      */
     @Override
     public boolean retainAll(Collection<?> c) {
@@ -282,17 +315,15 @@ public class Tree<E> implements Collection<E> {
      */
     @Override
     public void clear() {
-        Iterator<E> i = iterator();
-        while (i.hasNext()) {
-            i.next();
-            i.remove();
-        }
+        size = 0;
+        root.children.clear();
+        root = null;
     }
 
     /**
      * Returns number of nodes in Tree
      *
-     * @return - number of nodes in Tree
+     * @return number of nodes in Tree
      */
     @Override
     public int size() {
@@ -302,7 +333,7 @@ public class Tree<E> implements Collection<E> {
     /**
      * Checks if Tree is empty
      *
-     * @return - true if Tree is empty and false otherwise
+     * @return true if Tree is empty and false otherwise
      */
     @Override
     public boolean isEmpty() {
