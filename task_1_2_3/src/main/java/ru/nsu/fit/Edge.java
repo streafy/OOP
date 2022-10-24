@@ -1,11 +1,29 @@
 package ru.nsu.fit;
 
-public class Edge<V> {
-    private V sourceVertex;
-    private V targetVertex;
+public class Edge<T> {
+    private int weight;
+    private Vertex<T> sourceVertex;
+    private Vertex<T> targetVertex;
 
-    public Edge(V sourceVertex, V targetVertex) {
+    public Edge(int weight, Vertex<T> sourceVertex, Vertex<T> targetVertex) {
+        this.weight = weight;
         this.sourceVertex = sourceVertex;
         this.targetVertex = targetVertex;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public Vertex<T> getSourceVertex() {
+        return sourceVertex;
+    }
+
+    public Vertex<T> getTargetVertex() {
+        return targetVertex;
     }
 }

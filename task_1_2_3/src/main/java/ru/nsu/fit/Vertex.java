@@ -1,9 +1,17 @@
 package ru.nsu.fit;
 
-import java.util.ArrayList;
+public class Vertex<T> {
+    private T value;
 
-public class Vertex<V> {
-    V value;
-    private ArrayList<Vertex<V>> inNeighbors;
-    private ArrayList<Vertex<V>> outNeighbors;
+    public Vertex(T value) {
+        this.value = value;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
 }
