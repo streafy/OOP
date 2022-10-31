@@ -14,6 +14,9 @@ public class GraphTest {
 
         Graph<String> incMatrixGraph = new IncMatrixGraph<>();
         testGraph(incMatrixGraph);
+
+        Graph<String> adjListGraph = new AdjListGraph<>();
+        testGraph(adjListGraph);
     }
 
     void testGraph(Graph<String> graph) {
@@ -51,8 +54,10 @@ public class GraphTest {
         Assertions.assertTrue(graph.addEdge(ctEdge));
         Assertions.assertTrue(graph.addEdge(ftEdge));
 
+        System.out.println(graph);
         Map<Vertex<String>, Integer> sp = graph.shortestPath(s);
-        //sp.forEach((vertex, distance) -> System.out.println(vertex.getValue() + "(" + distance + ")"));
+        sp.forEach((vertex, distance) -> System.out.println(vertex.getValue() + "(" + distance + ")"));
+        System.out.println();
 
         Assertions.assertTrue(graph.contains("t"));
         Assertions.assertEquals("t", graph.getVertex("t").getValue());
@@ -60,6 +65,9 @@ public class GraphTest {
         Assertions.assertTrue(graph.contains("s", "a"));
         Assertions.assertEquals("s", graph.getEdge(s, a).getSourceVertex().getValue());
         Assertions.assertEquals("a", graph.getEdge(s, a).getTargetVertex().getValue());
+
+        Assertions.assertEquals(6, graph.getVerticesCount());
+        Assertions.assertEquals(9, graph.getEdgesCount());
 
         Assertions.assertTrue(graph.removeVertex(t));
         Assertions.assertFalse(graph.removeVertex(t));
