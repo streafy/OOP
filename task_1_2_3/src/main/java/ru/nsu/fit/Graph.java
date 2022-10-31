@@ -65,7 +65,7 @@ public interface Graph<T> {
      * @param targetVertex target vertex object of the edge we are looking for
      * @return Edge object if it's present in graph
      * @throws IllegalArgumentException if there is no source or target vertex present in graph
-     * @throws NoSuchElementException if there is no such edge in graph
+     * @throws NoSuchElementException   if there is no such edge in graph
      */
     Edge<T> getEdge(Vertex<T> sourceVertex, Vertex<T> targetVertex)
             throws IllegalArgumentException, NoSuchElementException;
