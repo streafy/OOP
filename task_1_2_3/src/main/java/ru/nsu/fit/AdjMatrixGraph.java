@@ -2,15 +2,26 @@ package ru.nsu.fit;
 
 import java.util.*;
 
+/**
+ * Graph implementation that uses Adjacency Matrix
+ *
+ * @param <T> type of elements stored in graph
+ */
 public class AdjMatrixGraph<T> implements Graph<T> {
     private int verticesCount = 0;
     private int edgesCount = 0;
     private final Map<Vertex<T>, Map<Vertex<T>, Integer>> matrix = new HashMap<>();
 
+    /**
+     * Empty AdjMatrixGraph constructor
+     */
     public AdjMatrixGraph() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addVertex(Vertex<T> vertex) {
         if (matrix.containsKey(vertex)) {
@@ -26,6 +37,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removeVertex(Vertex<T> vertex) {
         if (!matrix.containsKey(vertex)) {
@@ -38,6 +52,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vertex<T> getVertex(T value) throws NoSuchElementException {
         return matrix.keySet()
@@ -47,6 +64,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
                 .orElseThrow();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean contains(T value) {
         return matrix.keySet()
@@ -54,6 +74,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
                 .anyMatch(v -> v.getValue().equals(value));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addEdge(Edge<T> edge) {
         Vertex<T> source = edge.getSourceVertex();
@@ -68,6 +91,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removeEdge(Edge<T> edge) {
         Vertex<T> source = edge.getSourceVertex();
@@ -85,6 +111,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Edge<T> getEdge(Vertex<T> sourceVertex, Vertex<T> targetVertex) {
         if (!matrix.containsKey(sourceVertex) || !matrix.containsKey(targetVertex)) {
@@ -98,6 +127,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         return new Edge<>(weight, sourceVertex, targetVertex);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean contains(T sourceValue, T targetValue) {
         if (!contains(sourceValue) || !contains(targetValue)) {
@@ -109,6 +141,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         return matrix.get(sourceVertex).get(targetVertex) != 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<Vertex<T>, Integer> shortestPath(Vertex<T> source) {
         Map<Vertex<T>, Integer> distances = new HashMap<>();
@@ -140,6 +175,9 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         return distances;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -170,5 +208,21 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getVerticesCount() {
+        return verticesCount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getEdgesCount() {
+        return edgesCount;
     }
 }

@@ -5,15 +5,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Graph implementation that uses Incidence Matrix
+ *
+ * @param <T> type of elements stored in graph
+ */
 public class IncMatrixGraph<T> implements Graph<T> {
     private int verticesCount = 0;
     private int edgesCount = 0;
     private final Map<Vertex<T>, Map<Edge<T>, Integer>> matrix = new HashMap<>();
 
+    /**
+     * Empty IncMatrixGraph constructor
+     */
     public IncMatrixGraph() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addVertex(Vertex<T> vertex) {
         if (matrix.containsKey(vertex)) {
@@ -25,6 +36,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removeVertex(Vertex<T> vertex) {
         if (!matrix.containsKey(vertex)) {
@@ -32,19 +46,24 @@ public class IncMatrixGraph<T> implements Graph<T> {
         }
 
         matrix.remove(vertex);
-        for (Vertex<T> v : matrix.keySet()) {
+
+        Set<Edge<T>> forRemove = new HashSet<>();
+        matrix.keySet().forEach(v -> {
             Map<Edge<T>, Integer> row = matrix.get(v);
-            for (Edge<T> e : row.keySet()) {
+            row.keySet().forEach(e -> {
                 if (e.getTargetVertex().equals(vertex)) {
-                    row.remove(e);
-                    edgesCount--;
+                    forRemove.add(e);
                 }
-            }
-        }
+            });
+            forRemove.forEach(row::remove);
+        });
         verticesCount--;
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vertex<T> getVertex(T value) {
         return matrix.keySet()
@@ -54,6 +73,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
                 .orElseThrow();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean contains(T value) {
         return matrix.keySet()
@@ -61,6 +83,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
                 .anyMatch(v -> v.getValue().equals(value));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addEdge(Edge<T> edge) {
         Vertex<T> source = edge.getSourceVertex();
@@ -75,6 +100,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removeEdge(Edge<T> edge) {
         Vertex<T> source = edge.getSourceVertex();
@@ -90,6 +118,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Edge<T> getEdge(Vertex<T> sourceVertex, Vertex<T> targetVertex) {
         if (!matrix.containsKey(sourceVertex) || !matrix.containsKey(targetVertex)) {
@@ -108,6 +139,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
                 .orElseThrow();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean contains(T sourceValue, T targetValue) {
         if (!contains(sourceValue) || !contains(targetValue)) {
@@ -122,6 +156,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
                 .anyMatch(e -> e.getTargetVertex().equals(targetVertex));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<Vertex<T>, Integer> shortestPath(Vertex<T> source) {
         Map<Vertex<T>, Integer> distances = new HashMap<>();
@@ -153,6 +190,9 @@ public class IncMatrixGraph<T> implements Graph<T> {
         return distances;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -190,5 +230,21 @@ public class IncMatrixGraph<T> implements Graph<T> {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getVerticesCount() {
+        return verticesCount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getEdgesCount() {
+        return edgesCount;
     }
 }
