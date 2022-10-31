@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"ru.nsu.fit","l":"AdjListGraph"},{"p":"ru.nsu.fit","l":"AdjMatrixGraph"},{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.fit","l":"Edge"},{"p":"ru.nsu.fit","l":"Graph"},{"p":"ru.nsu.fit","l":"IncMatrixGraph"},{"p":"ru.nsu.fit","l":"Vertex"}]
