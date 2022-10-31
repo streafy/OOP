@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Graph implementation that uses Incidence Matrix
+ * Graph implementation that uses Incidence Matrix.
  *
  * @param <T> type of elements stored in graph
  */
