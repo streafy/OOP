@@ -3,6 +3,7 @@ package ru.nsu.fit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class GraphTest {
@@ -56,6 +57,18 @@ public class GraphTest {
 
         System.out.println(graph);
         Map<Vertex<String>, Integer> sp = graph.shortestPath(s);
+        Map<Vertex<String>, Integer> expected = new HashMap<>();
+        expected.put(s, 0);
+        expected.put(a, 3);
+        expected.put(b, 4);
+        expected.put(c, 5);
+        expected.put(f, 6);
+        expected.put(t, 10);
+        Assertions.assertTrue(expected.entrySet()
+                .stream()
+                .allMatch(e -> e.getValue().equals(sp.get(e.getKey())))
+        );
+
         sp.forEach((vertex, distance) -> System.out.println(vertex.getValue() + "(" + distance + ")"));
         System.out.println();
 
@@ -69,10 +82,23 @@ public class GraphTest {
         Assertions.assertEquals(6, graph.getVerticesCount());
         Assertions.assertEquals(9, graph.getEdgesCount());
 
+        s.setValue("q");
+        Assertions.assertEquals("q", s.getValue());
+
+        saEdge.setWeight(5);
+        Assertions.assertEquals(5, saEdge.getWeight());
+
         Assertions.assertTrue(graph.removeVertex(t));
         Assertions.assertFalse(graph.removeVertex(t));
 
+
         Assertions.assertTrue(graph.removeEdge(saEdge));
         Assertions.assertFalse(graph.removeEdge(saEdge));
+
+        sbEdge.setTargetVertex(t);
+        Assertions.assertEquals(t, sbEdge.getTargetVertex());
+
+        sbEdge.setSourceVertex(b);
+        Assertions.assertEquals(b, sbEdge.getSourceVertex());
     }
 }
