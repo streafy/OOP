@@ -1,12 +1,25 @@
 package ru.nsu.fit;
 
-abstract public class Graph<T> {
+import java.util.Map;
 
-    abstract boolean addVertex(Vertex<T> vertex);
+public interface Graph<T> {
+    boolean addVertex(Vertex<T> vertex);
 
-    abstract boolean removeVertex(Vertex<T> vertex);
+    boolean removeVertex(Vertex<T> vertex);
 
-    abstract boolean addEdge(Edge<T> edge);
+    Vertex<T> getVertex(T value);
 
-    abstract boolean removeEdge(Edge<T> edge);
+    boolean contains(T value);
+
+    boolean addEdge(Edge<T> edge);
+
+    boolean removeEdge(Edge<T> edge);
+
+    Edge<T> getEdge(Vertex<T> sourceVertex, Vertex<T> targetVertex);
+
+    boolean contains(T sourceValue, T targetValue);
+
+    Map<Vertex<T>, Integer> shortestPath(Vertex<T> from);
+
+    String toString();
 }

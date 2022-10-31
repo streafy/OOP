@@ -1,13 +1,16 @@
 package ru.nsu.fit;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class AdjMatrixGraph<T> implements Graph<T> {
+public class IncMatrixGraph<T> implements Graph<T> {
     private int verticesCount = 0;
     private int edgesCount = 0;
-    private final Map<Vertex<T>, Map<Vertex<T>, Integer>> matrix = new HashMap<>();
+    private final Map<Vertex<T>, Map<Edge<T>, Integer>> matrix = new HashMap<>();
 
-    public AdjMatrixGraph() {
+    public IncMatrixGraph() {
 
     }
 
@@ -18,10 +21,6 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         }
 
         matrix.put(vertex, new HashMap<>());
-        matrix.forEach((v, hm) -> {
-            matrix.get(v).put(vertex, 0);
-            matrix.get(vertex).put(v, 0);
-        });
         verticesCount++;
         return true;
     }
@@ -32,14 +31,22 @@ public class AdjMatrixGraph<T> implements Graph<T> {
             return false;
         }
 
-        matrix.forEach((v, hm) -> matrix.get(v).put(vertex, 0));
         matrix.remove(vertex);
+        for (Vertex<T> v : matrix.keySet()) {
+            Map<Edge<T>, Integer> row = matrix.get(v);
+            for (Edge<T> e : row.keySet()) {
+                if (e.getTargetVertex().equals(vertex)) {
+                    row.remove(e);
+                    edgesCount--;
+                }
+            }
+        }
         verticesCount--;
         return true;
     }
 
     @Override
-    public Vertex<T> getVertex(T value) throws NoSuchElementException {
+    public Vertex<T> getVertex(T value) {
         return matrix.keySet()
                 .stream()
                 .filter(v -> v.getValue().equals(value))
@@ -63,7 +70,7 @@ public class AdjMatrixGraph<T> implements Graph<T> {
             return false;
         }
 
-        matrix.get(source).put(target, edge.getWeight());
+        matrix.get(source).put(edge, edge.getWeight());
         edgesCount++;
         return true;
     }
@@ -78,9 +85,7 @@ public class AdjMatrixGraph<T> implements Graph<T> {
             return false;
         }
 
-
-        matrix.get(source).put(target, 0);
-        matrix.get(target).put(source, 0);
+        matrix.get(source).remove(edge);
         edgesCount--;
         return true;
     }
@@ -94,8 +99,13 @@ public class AdjMatrixGraph<T> implements Graph<T> {
             throw new IllegalArgumentException();
         }
 
-        int weight = matrix.get(sourceVertex).get(targetVertex);
-        return new Edge<>(weight, sourceVertex, targetVertex);
+        return matrix.get(sourceVertex)
+                .keySet()
+                .stream()
+                .filter(e -> e.getSourceVertex().equals(sourceVertex)
+                        && e.getTargetVertex().equals(targetVertex))
+                .findAny()
+                .orElseThrow();
     }
 
     @Override
@@ -106,7 +116,10 @@ public class AdjMatrixGraph<T> implements Graph<T> {
         Vertex<T> sourceVertex = getVertex(sourceValue);
         Vertex<T> targetVertex = getVertex(targetValue);
 
-        return matrix.get(sourceVertex).get(targetVertex) != 0;
+        return matrix.get(sourceVertex)
+                .keySet()
+                .stream()
+                .anyMatch(e -> e.getTargetVertex().equals(targetVertex));
     }
 
     @Override
@@ -152,18 +165,25 @@ public class AdjMatrixGraph<T> implements Graph<T> {
                 .orElse(0) + 1;
         builder.append(" ".repeat(paddingValue));
 
-        matrix.keySet().forEach(vtx -> builder.append(vtx.getValue()).append(" "));
+        Set<Edge<T>> edges = new HashSet<>();
+        matrix.values().forEach(hm -> edges.addAll(hm.keySet()));
+
+        edges.forEach(e -> builder
+                .append(e.getSourceVertex().getValue())
+                .append("->")
+                .append(e.getTargetVertex().getValue())
+                .append(" "));
         builder.append("\n");
 
         for (Vertex<T> v : matrix.keySet()) {
             String vertexString = v.getValue().toString();
-
             builder.append(vertexString).append(" ".repeat(paddingValue - vertexString.length()));
-            matrix.get(v).forEach((vertex, weight) -> {
-                if (weight == 0 && v != vertex) {
-                    builder.append("X").append(" ".repeat(vertexString.length()));
+
+            edges.forEach(e -> {
+                if (matrix.get(v).containsKey(e)) {
+                    builder.append(e.getWeight()).append(" ".repeat(vertexString.length() * 2 + 2));
                 } else {
-                    builder.append(weight).append(" ".repeat(vertexString.length()));
+                    builder.append("X").append(" ".repeat(vertexString.length() * 2 + 2));
                 }
             });
             builder.append("\n");
