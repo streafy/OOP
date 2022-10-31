@@ -56,7 +56,6 @@ public class GraphTest {
         Assertions.assertTrue(graph.addEdge(ftEdge));
 
         System.out.println(graph);
-        Map<Vertex<String>, Integer> sp = graph.shortestPath(s);
         Map<Vertex<String>, Integer> expected = new HashMap<>();
         expected.put(s, 0);
         expected.put(a, 3);
@@ -64,12 +63,14 @@ public class GraphTest {
         expected.put(c, 5);
         expected.put(f, 6);
         expected.put(t, 10);
+        Map<Vertex<String>, Integer> sp = graph.shortestPath(s);
         Assertions.assertTrue(expected.entrySet()
                 .stream()
                 .allMatch(e -> e.getValue().equals(sp.get(e.getKey())))
         );
 
-        sp.forEach((vertex, distance) -> System.out.println(vertex.getValue() + "(" + distance + ")"));
+        sp.forEach((vertex, distance) ->
+                System.out.println(vertex.getValue() + "(" + distance + ")"));
         System.out.println();
 
         Assertions.assertTrue(graph.contains("t"));

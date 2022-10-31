@@ -3,7 +3,7 @@ package ru.nsu.fit;
 import java.util.*;
 
 /**
- * Graph implementation that uses Adjacency Matrix
+ * Graph implementation that uses Adjacency Matrix.
  *
  * @param <T> type of elements stored in graph
  */
@@ -13,7 +13,7 @@ public class AdjMatrixGraph<T> implements Graph<T> {
     private final Map<Vertex<T>, Map<Vertex<T>, Integer>> matrix = new HashMap<>();
 
     /**
-     * Empty AdjMatrixGraph constructor
+     * Empty AdjMatrixGraph constructor.
      */
     public AdjMatrixGraph() {
 
@@ -68,16 +68,6 @@ public class AdjMatrixGraph<T> implements Graph<T> {
      * {@inheritDoc}
      */
     @Override
-    public boolean contains(T value) {
-        return matrix.keySet()
-                .stream()
-                .anyMatch(v -> v.getValue().equals(value));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean addEdge(Edge<T> edge) {
         Vertex<T> source = edge.getSourceVertex();
         Vertex<T> target = edge.getTargetVertex();
@@ -125,6 +115,16 @@ public class AdjMatrixGraph<T> implements Graph<T> {
 
         int weight = matrix.get(sourceVertex).get(targetVertex);
         return new Edge<>(weight, sourceVertex, targetVertex);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean contains(T value) {
+        return matrix.keySet()
+                .stream()
+                .anyMatch(v -> v.getValue().equals(value));
     }
 
     /**

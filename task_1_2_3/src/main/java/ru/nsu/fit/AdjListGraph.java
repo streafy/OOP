@@ -3,7 +3,7 @@ package ru.nsu.fit;
 import java.util.*;
 
 /**
- * Graph implementation that uses Adjacency List
+ * Graph implementation that uses Adjacency List.
  *
  * @param <T> type of elements stored in graph
  */
@@ -14,7 +14,7 @@ public class AdjListGraph<T> implements Graph<T> {
     private final Map<Vertex<T>, List<Vertex<T>>> matrix = new HashMap<>();
 
     /**
-     * Empty AdjListGraph constructor
+     * Empty AdjListGraph constructor.
      */
     public AdjListGraph() {
 
@@ -58,16 +58,6 @@ public class AdjListGraph<T> implements Graph<T> {
                 .filter(v -> v.getValue().equals(value))
                 .findAny()
                 .orElseThrow();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean contains(T value) {
-        return matrix.keySet()
-                .stream()
-                .anyMatch(v -> v.getValue().equals(value));
     }
 
     /**
@@ -124,6 +114,16 @@ public class AdjListGraph<T> implements Graph<T> {
                         && e.getTargetVertex().equals(targetVertex))
                 .findAny()
                 .orElseThrow();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean contains(T value) {
+        return matrix.keySet()
+                .stream()
+                .anyMatch(v -> v.getValue().equals(value));
     }
 
     /**
