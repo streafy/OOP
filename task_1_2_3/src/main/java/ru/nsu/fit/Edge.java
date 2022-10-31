@@ -3,7 +3,7 @@ package ru.nsu.fit;
 /**
  * Edge of the Graph.
  *
- * @param <T>
+ * @param <T> type of element stored in the Edge vertices
  */
 public class Edge<T> {
     private int weight;
