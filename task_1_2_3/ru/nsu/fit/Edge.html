@@ -128,9 +128,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - </dd>
+</dl>
 <hr>
 <pre>public class <span class="typeNameLabel">Edge&lt;T&gt;</span>
 extends java.lang.Object</pre>
+<div class="block">Edge of the Graph.</div>
 </li>
 </ul>
 </div>
@@ -154,7 +159,9 @@ extends java.lang.Object</pre>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,ru.nsu.fit.Vertex,ru.nsu.fit.Vertex)">Edge</a></span>&#8203;(int&nbsp;weight,
     <a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;sourceVertex,
     <a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;targetVertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Edge constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -177,32 +184,44 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceVertex()">getSourceVertex</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Get source vertex of the Edge.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTargetVertex()">getTargetVertex</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Get target vertex of the Edge.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWeight()">getWeight</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Get weight of the Edge.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSourceVertex(ru.nsu.fit.Vertex)">setSourceVertex</a></span>&#8203;(<a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;sourceVertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Set source vertex of the Edge.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTargetVertex(ru.nsu.fit.Vertex)">setTargetVertex</a></span>&#8203;(<a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;targetVertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Set source vertex of the Edge.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWeight(int)">setWeight</a></span>&#8203;(int&nbsp;weight)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Set weight of the Edge.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -237,6 +256,13 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;Edge&#8203;(int&nbsp;weight,
             <a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;sourceVertex,
             <a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;targetVertex)</pre>
+<div class="block">Edge constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>weight</code> - weight of the Edge</dd>
+<dd><code>sourceVertex</code> - source vertex of the Edge</dd>
+<dd><code>targetVertex</code> - target vertex of the Edge</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -256,6 +282,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getWeight</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;getWeight()</pre>
+<div class="block">Get weight of the Edge.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>weight of the Edge</dd>
+</dl>
 </li>
 </ul>
 <a id="setWeight(int)">
@@ -265,6 +296,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setWeight</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setWeight&#8203;(int&nbsp;weight)</pre>
+<div class="block">Set weight of the Edge.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>weight</code> - weight to be set</dd>
+</dl>
 </li>
 </ul>
 <a id="getSourceVertex()">
@@ -274,6 +310,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getSourceVertex</h4>
 <pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;getSourceVertex()</pre>
+<div class="block">Get source vertex of the Edge.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Vertex object that represents source vertex of the Edge</dd>
+</dl>
 </li>
 </ul>
 <a id="setSourceVertex(ru.nsu.fit.Vertex)">
@@ -283,6 +324,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setSourceVertex</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setSourceVertex&#8203;(<a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;sourceVertex)</pre>
+<div class="block">Set source vertex of the Edge.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>sourceVertex</code> - - source vertex to be set</dd>
+</dl>
 </li>
 </ul>
 <a id="getTargetVertex()">
@@ -292,6 +338,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getTargetVertex</h4>
 <pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;getTargetVertex()</pre>
+<div class="block">Get target vertex of the Edge.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Vertex object that represents target vertex of the Edge</dd>
+</dl>
 </li>
 </ul>
 <a id="setTargetVertex(ru.nsu.fit.Vertex)">
@@ -301,6 +352,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setTargetVertex</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setTargetVertex&#8203;(<a href="Vertex.html" title="class in ru.nsu.fit">Vertex</a>&lt;<a href="Edge.html" title="type parameter in Edge">T</a>&gt;&nbsp;targetVertex)</pre>
+<div class="block">Set source vertex of the Edge.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>targetVertex</code> - - source vertex to be set</dd>
+</dl>
 </li>
 </ul>
 </li>
