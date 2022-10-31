@@ -10,6 +10,7 @@ import java.util.*;
 public class Tree<E> implements Collection<E> {
     private Node<E> root;
     private int size = 0;
+    private long modsCount = 0;
 
     private static class Node<T> {
         private final T elem;
@@ -27,8 +28,10 @@ public class Tree<E> implements Collection<E> {
     private class DFSIterator implements Iterator<E> {
         private final Deque<Node<E>> stack = new ArrayDeque<>();
         private Node<E> lastVisited;
+        private final long currModsCount;
 
         public DFSIterator() {
+            currModsCount = modsCount;
             if (root != null) {
                 stack.push(root);
             }
@@ -54,6 +57,10 @@ public class Tree<E> implements Collection<E> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
+            if (currModsCount != modsCount) {
+                throw new ConcurrentModificationException();
+            }
+
             Node<E> node = stack.pop();
             lastVisited = node;
             for (int i = node.children.size() - 1; i >= 0; i--) {
@@ -67,6 +74,9 @@ public class Tree<E> implements Collection<E> {
          */
         @Override
         public void remove() {
+            if (currModsCount != modsCount) {
+                throw new ConcurrentModificationException();
+            }
             size--;
             if (lastVisited.parent != null) {
                 lastVisited.parent.children.addAll(lastVisited.children);
@@ -86,8 +96,11 @@ public class Tree<E> implements Collection<E> {
     private class BFSIterator implements Iterator<E> {
         private final Deque<Node<E>> queue = new ArrayDeque<>();
         private Node<E> lastVisited;
+        private final long currModsCount;
 
         public BFSIterator() {
+            currModsCount = modsCount;
+
             if (root != null) {
                 lastVisited = root;
                 queue.add(root);
@@ -114,6 +127,10 @@ public class Tree<E> implements Collection<E> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
+            if (currModsCount != modsCount) {
+                throw new ConcurrentModificationException();
+            }
+
             Node<E> node = queue.poll();
             lastVisited = node;
             queue.addAll(node.children);
@@ -125,6 +142,9 @@ public class Tree<E> implements Collection<E> {
          */
         @Override
         public void remove() {
+            if (currModsCount != modsCount) {
+                throw new ConcurrentModificationException();
+            }
             if (lastVisited.parent == null) {
                 return;
             }
@@ -233,6 +253,7 @@ public class Tree<E> implements Collection<E> {
      * @return Tree with added element
      */
     public Tree<E> add(Tree<E> tree, E elem) {
+        modsCount++;
         if (elem == null) {
             throw new IllegalArgumentException("Added element can't be null");
         }
@@ -256,6 +277,7 @@ public class Tree<E> implements Collection<E> {
      */
     @Override
     public boolean remove(Object elem) {
+        modsCount++;
         Iterator<E> i = iterator();
         while (i.hasNext()) {
             E e = i.next();
@@ -316,6 +338,7 @@ public class Tree<E> implements Collection<E> {
      */
     @Override
     public boolean removeAll(Collection<?> c) {
+        modsCount++;
         boolean isChanged = false;
         Iterator<E> i = iterator();
         while (i.hasNext()) {
@@ -336,6 +359,7 @@ public class Tree<E> implements Collection<E> {
      */
     @Override
     public boolean retainAll(Collection<?> c) {
+        modsCount++;
         boolean isChanged = false;
         Iterator<E> i = iterator();
         while (i.hasNext()) {
@@ -353,6 +377,7 @@ public class Tree<E> implements Collection<E> {
      */
     @Override
     public void clear() {
+        modsCount++;
         size = 0;
         root.children.clear();
         root = null;

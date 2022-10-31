@@ -3,7 +3,7 @@ package ru.nsu.fit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 public class TreeTest {
@@ -116,5 +116,20 @@ public class TreeTest {
         tree.retainAll(tree1);
 
         Assertions.assertArrayEquals(testStrings, tree1.toArray());
+    }
+
+    @Test
+    void testConcurrentModificationException() {
+        Tree<String> tree = createTestTree();
+        Iterator<String> dfsIterator = tree.iterator();
+        tree.add("123");
+
+        Assertions.assertThrows(ConcurrentModificationException.class, dfsIterator::next);
+
+        Tree<String> tree1 = createTestTree();
+        Iterator<String> bfsIterator = tree1.BFSIterator();
+        tree1.add("123");
+
+        Assertions.assertThrows(ConcurrentModificationException.class, bfsIterator::next);
     }
 }
