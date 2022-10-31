@@ -23,7 +23,15 @@ public class Edge<T> {
         return sourceVertex;
     }
 
+    public void setSourceVertex(Vertex<T> sourceVertex) {
+        this.sourceVertex = sourceVertex;
+    }
+
     public Vertex<T> getTargetVertex() {
         return targetVertex;
+    }
+
+    public void setTargetVertex(Vertex<T> targetVertex) {
+        this.targetVertex = targetVertex;
     }
 }
