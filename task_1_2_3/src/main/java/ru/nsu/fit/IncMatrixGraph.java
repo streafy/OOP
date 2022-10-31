@@ -77,16 +77,6 @@ public class IncMatrixGraph<T> implements Graph<T> {
      * {@inheritDoc}
      */
     @Override
-    public boolean contains(T value) {
-        return matrix.keySet()
-                .stream()
-                .anyMatch(v -> v.getValue().equals(value));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean addEdge(Edge<T> edge) {
         Vertex<T> source = edge.getSourceVertex();
         Vertex<T> target = edge.getTargetVertex();
@@ -137,6 +127,16 @@ public class IncMatrixGraph<T> implements Graph<T> {
                         && e.getTargetVertex().equals(targetVertex))
                 .findAny()
                 .orElseThrow();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean contains(T value) {
+        return matrix.keySet()
+                .stream()
+                .anyMatch(v -> v.getValue().equals(value));
     }
 
     /**
