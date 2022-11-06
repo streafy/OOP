@@ -1,0 +1,7 @@
+  c->f a->c f->t s->a s->b c->t b->f a->b a->f 
+t X    X    X    X    X    X    X    X    X    
+s X    X    X    3    4    X    X    X    X    
+c 1    X    X    X    X    8    X    X    X    
+b X    X    X    X    X    X    5    X    X    
+f X    X    4    X    X    X    X    X    X    
+a X    2    X    X    X    X    X    6    7    

@@ -2,6 +2,10 @@ package ru.nsu.fit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.nsu.fit.graph.*;
+import ru.nsu.fit.graph.utilities.Edge;
+import ru.nsu.fit.graph.utilities.Vertex;
+import ru.nsu.fit.parser.GraphParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,50 +14,31 @@ public class GraphTest {
 
     @Test
     void testEveryRepresentation() {
+        GraphParser parser = new GraphParser();
+
         Graph<String> adjMatrixGraph = new AdjMatrixGraph<>();
+        parser.parseAsAdjMatrix(adjMatrixGraph, "src/test/java/ru/nsu/fit/adjm.txt");
         testGraph(adjMatrixGraph);
 
         Graph<String> incMatrixGraph = new IncMatrixGraph<>();
+        parser.parseAsAdjMatrix(incMatrixGraph, "src/test/java/ru/nsu/fit/adjm.txt");
         testGraph(incMatrixGraph);
 
+        /*
         Graph<String> adjListGraph = new AdjListGraph<>();
-        testGraph(adjListGraph);
+        testGraph(adjListGraph);*/
     }
 
     void testGraph(Graph<String> graph) {
-        Vertex<String> s = new Vertex<>("s");
-        Vertex<String> a = new Vertex<>("a");
-        Vertex<String> b = new Vertex<>("b");
-        Vertex<String> c = new Vertex<>("c");
-        Vertex<String> f = new Vertex<>("f");
-        Vertex<String> t = new Vertex<>("t");
+        Vertex<String> s = graph.getVertex("s");
+        Vertex<String> a = graph.getVertex("a");
+        Vertex<String> b = graph.getVertex("b");
+        Vertex<String> c = graph.getVertex("c");
+        Vertex<String> f = graph.getVertex("f");
+        Vertex<String> t = graph.getVertex("t");
 
-        Edge<String> saEdge = new Edge<>(3, s, a);
-        Edge<String> sbEdge = new Edge<>(4, s, b);
-        Edge<String> abEdge = new Edge<>(6, a, b);
-        Edge<String> acEdge = new Edge<>(2, a, c);
-        Edge<String> afEdge = new Edge<>(7, a, f);
-        Edge<String> bfEdge = new Edge<>(5, b, f);
-        Edge<String> cfEdge = new Edge<>(1, c, f);
-        Edge<String> ctEdge = new Edge<>(8, c, t);
-        Edge<String> ftEdge = new Edge<>(4, f, t);
-
-        Assertions.assertTrue(graph.addVertex(s));
-        Assertions.assertTrue(graph.addVertex(a));
-        Assertions.assertTrue(graph.addVertex(b));
-        Assertions.assertTrue(graph.addVertex(c));
-        Assertions.assertTrue(graph.addVertex(f));
-        Assertions.assertTrue(graph.addVertex(t));
-
-        Assertions.assertTrue(graph.addEdge(saEdge));
-        Assertions.assertTrue(graph.addEdge(sbEdge));
-        Assertions.assertTrue(graph.addEdge(abEdge));
-        Assertions.assertTrue(graph.addEdge(acEdge));
-        Assertions.assertTrue(graph.addEdge(afEdge));
-        Assertions.assertTrue(graph.addEdge(bfEdge));
-        Assertions.assertTrue(graph.addEdge(cfEdge));
-        Assertions.assertTrue(graph.addEdge(ctEdge));
-        Assertions.assertTrue(graph.addEdge(ftEdge));
+        Edge<String> saEdge = graph.getEdge(s, a);
+        Edge<String> sbEdge = graph.getEdge(s, b);
 
         System.out.println(graph);
         Map<Vertex<String>, Integer> expected = new HashMap<>();
@@ -73,10 +58,10 @@ public class GraphTest {
                 System.out.println(vertex.getValue() + "(" + distance + ")"));
         System.out.println();
 
-        Assertions.assertTrue(graph.contains("t"));
+        Assertions.assertTrue(graph.containsVertex("t"));
         Assertions.assertEquals("t", graph.getVertex("t").getValue());
 
-        Assertions.assertTrue(graph.contains("s", "a"));
+        Assertions.assertTrue(graph.containsEdge("s", "a"));
         Assertions.assertEquals("s", graph.getEdge(s, a).getSourceVertex().getValue());
         Assertions.assertEquals("a", graph.getEdge(s, a).getTargetVertex().getValue());
 

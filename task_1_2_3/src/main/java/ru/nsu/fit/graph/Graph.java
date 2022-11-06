@@ -1,4 +1,7 @@
-package ru.nsu.fit;
+package ru.nsu.fit.graph;
+
+import ru.nsu.fit.graph.utilities.Edge;
+import ru.nsu.fit.graph.utilities.Vertex;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -68,7 +71,7 @@ public interface Graph<T> {
      * @param value value of Vertex which presence we check
      * @return true if such Vertex present in graph, false otherwise
      */
-    boolean contains(T value);
+    boolean containsVertex(T value);
 
     /**
      * Check if Edge with specific source and target vertices values.
@@ -77,7 +80,7 @@ public interface Graph<T> {
      * @param targetValue target vertex value
      * @return true if there is such edge, false otherwise
      */
-    boolean contains(T sourceValue, T targetValue);
+    boolean containsEdge(T sourceValue, T targetValue);
 
     /**
      * Find the shortest path from specific Vertex to every Vertex in graph.

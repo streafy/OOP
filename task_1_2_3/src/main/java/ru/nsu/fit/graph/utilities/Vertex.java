@@ -1,4 +1,4 @@
-package ru.nsu.fit;
+package ru.nsu.fit.graph.utilities;
 
 /**
  * Vertex of the Graph.

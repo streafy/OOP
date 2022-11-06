@@ -1,4 +1,7 @@
-package ru.nsu.fit;
+package ru.nsu.fit.graph;
+
+import ru.nsu.fit.graph.utilities.Edge;
+import ru.nsu.fit.graph.utilities.Vertex;
 
 import java.util.*;
 
@@ -87,7 +90,7 @@ public class AdjListGraph<T> implements Graph<T> {
         Vertex<T> target = edge.getTargetVertex();
 
         if (!matrix.containsKey(source) || !matrix.containsKey(target)
-                || !contains(source.getValue(), target.getValue())) {
+                || !containsEdge(source.getValue(), target.getValue())) {
             return false;
         }
 
@@ -105,7 +108,7 @@ public class AdjListGraph<T> implements Graph<T> {
         if (!matrix.containsKey(sourceVertex) || !matrix.containsKey(targetVertex)) {
             throw new IllegalArgumentException();
         }
-        if (!contains(sourceVertex.getValue(), targetVertex.getValue())) {
+        if (!containsEdge(sourceVertex.getValue(), targetVertex.getValue())) {
             throw new IllegalArgumentException();
         }
 
@@ -120,7 +123,7 @@ public class AdjListGraph<T> implements Graph<T> {
      * {@inheritDoc}
      */
     @Override
-    public boolean contains(T value) {
+    public boolean containsVertex(T value) {
         return matrix.keySet()
                 .stream()
                 .anyMatch(v -> v.getValue().equals(value));
@@ -130,7 +133,7 @@ public class AdjListGraph<T> implements Graph<T> {
      * {@inheritDoc}
      */
     @Override
-    public boolean contains(T sourceValue, T targetValue) {
+    public boolean containsEdge(T sourceValue, T targetValue) {
         return edges.stream()
                 .anyMatch(e -> e.getSourceVertex().getValue().equals(sourceValue)
                         && e.getTargetVertex().getValue().equals(targetValue));
@@ -158,7 +161,7 @@ public class AdjListGraph<T> implements Graph<T> {
             unvisited.remove(u);
 
             for (Vertex<T> v : matrix.keySet()) {
-                if (!contains(u.getValue(), v.getValue())) {
+                if (!containsEdge(u.getValue(), v.getValue())) {
                     continue;
                 }
                 int newDistance = distances.get(u) + getEdge(u, v).getWeight();
