@@ -1,0 +1,7 @@
+  s a b c f t
+s 0 3 4 X X X
+a X 0 6 2 7 X
+b X X 0 X 5 X
+c X X X 0 1 8
+f X X X X 0 4
+t X X X X X 0

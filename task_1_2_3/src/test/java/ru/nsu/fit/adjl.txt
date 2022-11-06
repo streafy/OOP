@@ -1,0 +1,6 @@
+s| a b
+a| b c f
+b| f
+c| f t
+f| t
+t| 
