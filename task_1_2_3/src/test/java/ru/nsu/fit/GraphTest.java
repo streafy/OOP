@@ -16,17 +16,16 @@ public class GraphTest {
     void testEveryRepresentation() {
         GraphParser parser = new GraphParser();
 
-        Graph<String> adjMatrixGraph = new AdjMatrixGraph<>();
-        parser.parseAsAdjMatrix(adjMatrixGraph, "src/test/java/ru/nsu/fit/adjm.txt");
+        Graph<String> adjMatrixGraph = parser.parseAsAdjMatrix("src/test/java/ru/nsu/fit/adjm.txt");
         testGraph(adjMatrixGraph);
 
-        Graph<String> incMatrixGraph = new IncMatrixGraph<>();
-        parser.parseAsAdjMatrix(incMatrixGraph, "src/test/java/ru/nsu/fit/adjm.txt");
+
+        Graph<String> incMatrixGraph = parser.parseAsIncMatrix("src/test/java/ru/nsu/fit/incm.txt");
         testGraph(incMatrixGraph);
 
-        /*
-        Graph<String> adjListGraph = new AdjListGraph<>();
-        testGraph(adjListGraph);*/
+
+        Graph<String> adjListGraph = parser.parseAsAdjList("src/test/java/ru/nsu/fit/adjl.txt");
+        testGraph(adjListGraph);
     }
 
     void testGraph(Graph<String> graph) {

@@ -1,6 +1,6 @@
-s| a b
-a| b c f
-b| f
-c| f t
-f| t
-t| 
+s -> a 3 b 4
+a -> b 6 c 2 f 7
+b -> f 5
+c -> f 1 t 8
+f -> t 4
+t 
