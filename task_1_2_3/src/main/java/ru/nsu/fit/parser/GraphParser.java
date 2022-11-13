@@ -16,7 +16,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Graph parser to read graph with elements of string type from file.
+ */
 public class GraphParser {
+    /**
+     * Empty GraphParser constructor.
+     */
+    public  GraphParser() {
+
+    }
+
+    /**
+     * Read file to list of strings.
+     *
+     * @param filename name of input file
+     * @return list of strings from file
+     */
     private List<String> readFile(String filename) {
         List<String> lines = new ArrayList<>();
 
@@ -29,6 +45,12 @@ public class GraphParser {
         return lines;
     }
 
+    /**
+     * Parses Graph as adjacency matrix.
+     *
+     * @param filename name of input file
+     * @return Graph object with elements from adjacency matrix
+     */
     public Graph<String> parseAsAdjMatrix(String filename) {
         List<String> lines = readFile(filename);
 
@@ -59,6 +81,12 @@ public class GraphParser {
         return graph;
     }
 
+    /**
+     * Parses Graph as incidence matrix.
+     *
+     * @param filename name of input file
+     * @return Graph object with elements from incidence matrix
+     */
     public Graph<String> parseAsIncMatrix(String filename) {
         List<String> lines = readFile(filename);
 
@@ -91,6 +119,12 @@ public class GraphParser {
         return graph;
     }
 
+    /**
+     * Parses Graph as adjacency list.
+     *
+     * @param filename name of input file
+     * @return Graph object with elements from adjacency list
+     */
     public Graph<String> parseAsAdjList(String filename) {
         List<String> lines = readFile(filename);
 
