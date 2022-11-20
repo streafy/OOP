@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 public class AhoCorasick {
+    Trie trie = new Trie();
+    Node current = trie.root;
+
+    int processedCount = 0;
+    int patternLength ;
+    List<Integer> substringIndices = new ArrayList<>();
 
     private static class Node {
         private final Map<Character, Node> next = new HashMap<>();
@@ -87,10 +93,24 @@ public class AhoCorasick {
         }
     }
 
-    public AhoCorasick() {
+    public AhoCorasick(String pattern) {
+        trie.add(pattern);
+        patternLength = pattern.length();
     }
 
-    public void processText(String text, String pattern) {
+    public void processChar(char c) {
+        current = trie.transition(current, c);
+        processedCount++;
+        if (current.isTerminal) {
+            substringIndices.add(processedCount - patternLength);
+        }
+    }
+
+    public List<Integer> getSubstringIndices() {
+        return substringIndices;
+    }
+
+    /*public void processText(String text, String pattern) {
         Trie trie = new Trie();
         trie.add(pattern);
 
@@ -101,5 +121,5 @@ public class AhoCorasick {
                 System.out.println(i - pattern.length() + 1);
             }
         }
-    }
+    }*/
 }
