@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AhoCorasick {
+public class AhoCorasick implements SubstringFinderAlgorithm {
     Trie trie = new Trie();
     Node current = trie.root;
 
@@ -109,17 +109,4 @@ public class AhoCorasick {
     public List<Integer> getSubstringIndices() {
         return substringIndices;
     }
-
-    /*public void processText(String text, String pattern) {
-        Trie trie = new Trie();
-        trie.add(pattern);
-
-        Node node = trie.root;
-        for (int i = 0; i < text.length(); i++) {
-            node = trie.transition(node, text.charAt(i));
-            if (node.isTerminal) {
-                System.out.println(i - pattern.length() + 1);
-            }
-        }
-    }*/
 }
