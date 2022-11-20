@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"ru.nsu.fit.algorithms","l":"AhoCorasick"},{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.fit.algorithms","l":"KnuthMorrisPratt"},{"p":"ru.nsu.fit","l":"SubstringFinder"},{"p":"ru.nsu.fit.algorithms","l":"SubstringFinderAlgorithm"}]
