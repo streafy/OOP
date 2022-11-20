@@ -24,9 +24,14 @@ public class SubstringFinder {
      */
     public SubstringFinder(String algorithm, String pattern) {
         switch (algorithm) {
-            case "AC" -> finder = new AhoCorasick(pattern);
-            case "KMP" -> finder = new KnuthMorrisPratt(pattern);
-            default -> throw new IllegalArgumentException("Unsupported algorithm");
+            case "AC":
+                finder = new AhoCorasick(pattern);
+                break;
+            case "KMP":
+                finder = new KnuthMorrisPratt(pattern);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported algorithm");
         }
     }
 
