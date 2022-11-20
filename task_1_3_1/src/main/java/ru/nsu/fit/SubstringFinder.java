@@ -23,11 +23,11 @@ public class SubstringFinder {
      * @param pattern pattern for substring finder
      */
     public SubstringFinder(String algorithm, String pattern) {
-        finder = switch (algorithm) {
-            case "AC" -> new AhoCorasick(pattern);
-            case "KMP" -> new KnuthMorrisPratt(pattern);
+        switch (algorithm) {
+            case "AC" -> finder = new AhoCorasick(pattern);
+            case "KMP" -> finder = new KnuthMorrisPratt(pattern);
             default -> throw new IllegalArgumentException("Unsupported algorithm");
-        };
+        }
     }
 
     /**
