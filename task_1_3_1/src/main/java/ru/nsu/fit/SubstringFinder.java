@@ -10,9 +10,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+/**
+ * Class for finding all occurrences of substring in a given string.
+ */
 public class SubstringFinder {
     SubstringFinderAlgorithm finder;
 
+    /**
+     * Constructs finder with given algorithm and pattern.
+     *
+     * @param algorithm algorithm for substring finder
+     * @param pattern pattern for substring finder
+     */
     public SubstringFinder(String algorithm, String pattern) {
         finder = switch (algorithm) {
             case "AC" -> new AhoCorasick(pattern);
@@ -21,6 +30,12 @@ public class SubstringFinder {
         };
     }
 
+    /**
+     * Searches all occurrences of substrings in a buffered input from an input stream.
+     *
+     * @param inputStream input stream in which search will be performed
+     * @return list with indices of all occurrences of substring in given input stream
+     */
     public List<Integer> search(InputStream inputStream) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             int c;

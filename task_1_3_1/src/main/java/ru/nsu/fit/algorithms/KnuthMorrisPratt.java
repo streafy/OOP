@@ -3,6 +3,9 @@ package ru.nsu.fit.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Knuth-Morris-Pratt algorithm to find all occurrences of substring in a given string.
+ */
 public class KnuthMorrisPratt implements SubstringFinderAlgorithm {
     private final List<Integer> prefix = new ArrayList<>();
     private String concatString;
@@ -10,6 +13,11 @@ public class KnuthMorrisPratt implements SubstringFinderAlgorithm {
     private final int patternLength;
     private final List<Integer> substringIndices = new ArrayList<>();
 
+    /**
+     * Initializes data for algorithm from pattern.
+     *
+     * @param pattern substring pattern to find
+     */
     public KnuthMorrisPratt(String pattern) {
         concatString = pattern + '#';
         patternLength = pattern.length();
@@ -29,6 +37,10 @@ public class KnuthMorrisPratt implements SubstringFinderAlgorithm {
         return j;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void processChar(char c) {
         concatString += c;
         prefix.add(prefixFunction(c, processedCount));
@@ -39,6 +51,10 @@ public class KnuthMorrisPratt implements SubstringFinderAlgorithm {
         processedCount++;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Integer> getSubstringIndices() {
         return substringIndices;
     }
