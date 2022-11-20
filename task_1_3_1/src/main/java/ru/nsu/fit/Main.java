@@ -1,13 +1,12 @@
 package ru.nsu.fit;
 
-import java.util.List;
+import ru.nsu.fit.algorithms.KnuthMorrisPratt;
+
+import java.io.ByteArrayInputStream;
 
 public class Main {
     public static void main(String[] args) {
-        SubstringFinder finder = new SubstringFinder();
-        System.out.println("here");
-        List<Integer> indices = finder.search(System.in, "be");
-        System.out.println("and here");
-        indices.forEach(System.out::println);
+        SubstringFinder sf = new SubstringFinder();
+        sf.searchKMP(new ByteArrayInputStream("be1234besbe".getBytes()), "be").forEach(System.out::println);
     }
 }
