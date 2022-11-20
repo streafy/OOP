@@ -1,10 +1,13 @@
 package ru.nsu.fit;
 
-import ru.nsu.fit.algorithms.AhoCorasick;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        AhoCorasick ah = new AhoCorasick();
-        ah.processText("qweqwe bebebe", "be");
+        SubstringFinder finder = new SubstringFinder();
+        System.out.println("here");
+        List<Integer> indices = finder.search(System.in, "be");
+        System.out.println("and here");
+        indices.forEach(System.out::println);
     }
 }
