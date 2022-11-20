@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KnuthMorrisPratt implements SubstringFinderAlgorithm {
-    List<Integer> prefix = new ArrayList<>();
-    String concatString;
-
-    int processedCount = 1;
-    int patternLength;
-    List<Integer> substringIndices = new ArrayList<>();
+    private final List<Integer> prefix = new ArrayList<>();
+    private String concatString;
+    private int processedCount = 1;
+    private final int patternLength;
+    private final List<Integer> substringIndices = new ArrayList<>();
 
     public KnuthMorrisPratt(String pattern) {
         concatString = pattern + '#';
@@ -34,8 +33,9 @@ public class KnuthMorrisPratt implements SubstringFinderAlgorithm {
         concatString += c;
         prefix.add(prefixFunction(c, processedCount));
         if (prefix.get(processedCount) == patternLength) {
-            substringIndices.add(processedCount - patternLength - 2);
+            substringIndices.add(processedCount - patternLength * 2);
         }
+
         processedCount++;
     }
 

@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class AhoCorasick implements SubstringFinderAlgorithm {
-    Trie trie = new Trie();
-    Node current = trie.root;
-
-    int processedCount = 0;
-    int patternLength ;
-    List<Integer> substringIndices = new ArrayList<>();
+    private final Trie trie = new Trie();
+    private Node current = trie.root;
+    private int processedCount = 0;
+    private final int patternLength ;
+    private final List<Integer> substringIndices = new ArrayList<>();
 
     private static class Node {
         private final Map<Character, Node> next = new HashMap<>();
