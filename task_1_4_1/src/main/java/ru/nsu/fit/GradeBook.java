@@ -3,12 +3,12 @@ package ru.nsu.fit;
 import java.util.Collections;
 import java.util.List;
 
-public class RecordBook {
-    private int id;
-    private String studentName;
-    private String department;
-    private List<Semester> semesters;
-    private int currentSemester;
+public class GradeBook {
+    private final int id;
+    private final String studentName;
+    private final String department;
+    private final List<Semester> semesters;
+    private final int currentSemester;
 
     private int averageMark = 0;
 
@@ -18,7 +18,7 @@ public class RecordBook {
 
     public class Subject {
         private final String subjectName;
-        private int grade;
+        private final int grade;
         private final List<Integer> semesters;
 
         public Subject(String subjectName, int grade, List<Integer> semesters) {
@@ -28,7 +28,7 @@ public class RecordBook {
         }
     }
 
-    public RecordBook(int id, String studentName, String department, int currentSemester, List<Subject> subjects) {
+    public GradeBook(int id, String studentName, String department, int currentSemester, List<Subject> subjects) {
         this.id = id;
         this.studentName = studentName;
         this.department = department;
