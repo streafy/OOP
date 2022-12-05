@@ -17,13 +17,25 @@ public enum Grade {
      * @return integer value of Grade
      */
     public int toInt() {
-        return switch (this) {
-            case FAILED -> 0;
-            case PASSED, EXCELLENT -> 5;
-            case POOR -> 2;
-            case SATISFACTORY -> 3;
-            case GOOD -> 4;
-        };
+        int grade = -1;
+        switch (this) {
+            case FAILED:
+                grade = 0;
+                break;
+            case PASSED, EXCELLENT:
+                grade = 5;
+                break;
+            case POOR:
+                grade = 2;
+                break;
+            case SATISFACTORY:
+                grade = 3;
+                break;
+            case GOOD:
+                grade = 4;
+                break;
+        }
+        return grade;
     }
 
     /**
@@ -33,13 +45,27 @@ public enum Grade {
      */
     @Override
     public String toString() {
-        return switch (this) {
-            case FAILED -> "FAILED";
-            case PASSED -> "PASSED";
-            case POOR -> "POOR";
-            case SATISFACTORY -> "SATISFACTORY";
-            case GOOD -> "GOOD";
-            case EXCELLENT -> "EXCELLENT";
-        };
+        String grade = "";
+        switch (this) {
+            case FAILED:
+                grade = "FAILED";
+                break;
+            case PASSED:
+                grade = "PASSED";
+                break;
+            case POOR:
+                grade = "POOR";
+                break;
+            case SATISFACTORY:
+                grade = "SATISFACTORY";
+                break;
+            case GOOD:
+                grade = "GOOD";
+                break;
+            case EXCELLENT:
+                grade = "EXCELLENT";
+                break;
+        }
+        return grade;
     }
 }
