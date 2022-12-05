@@ -22,7 +22,8 @@ public enum Grade {
             case FAILED:
                 grade = 0;
                 break;
-            case PASSED, EXCELLENT:
+            case PASSED:
+            case EXCELLENT:
                 grade = 5;
                 break;
             case POOR:
