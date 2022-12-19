@@ -69,4 +69,15 @@ public class GradeBookTest {
     public void testScholarship() {
         Assertions.assertTrue(gb.hasScholarship());
     }
+
+    @Test
+    public void testGetSubjectByType() {
+        Assertions.assertEquals(4, gb.getSemesterSubjectsCountByType(AttestationForm.DIF_CREDIT, 1));
+        Assertions.assertEquals(3, gb.getSemesterSubjectsCountByType(AttestationForm.CREDIT, 1));
+        Assertions.assertEquals(2, gb.getSemesterSubjectsCountByType(AttestationForm.EXAM, 1));
+
+        Assertions.assertEquals(3, gb.getSemesterSubjectsCountByType(AttestationForm.DIF_CREDIT, 2));
+        Assertions.assertEquals(1, gb.getSemesterSubjectsCountByType(AttestationForm.CREDIT, 2));
+        Assertions.assertEquals(3, gb.getSemesterSubjectsCountByType(AttestationForm.EXAM, 2));
+    }
 }
