@@ -15,15 +15,15 @@ public class GradeBookTest {
 
     @BeforeEach
     public void init() {
-        Subject s1 = new Subject("Intro to algebra and analysis", Grade.GOOD, AttestationForm.EXAM, false);
-        Subject s2 = new Subject("Intro to discrete math and mathematical logic", Grade.GOOD, AttestationForm.EXAM, false);
-        Subject s3 = new Subject("Declarative programming", Grade.EXCELLENT, AttestationForm.DIF_CREDIT, false);
-        Subject s4 = new Subject("Imperative programming", Grade.GOOD, AttestationForm.DIF_CREDIT, false);
-        Subject s5 = new Subject("Foreign language", Grade.PASSED, AttestationForm.CREDIT, false);
-        Subject s6 = new Subject("History", Grade.GOOD, AttestationForm.DIF_CREDIT, true);
-        Subject s7 = new Subject("Basics of speech culture", Grade.EXCELLENT, AttestationForm.DIF_CREDIT, true);
-        Subject s8 = new Subject("Physical Culture and sport", Grade.PASSED, AttestationForm.CREDIT, false);
-        Subject s9 = new Subject("Digital platforms", Grade.PASSED, AttestationForm.CREDIT, false);
+        Subject s1 = new Subject("Intro to algebra and analysis", ExamGrade.GOOD, false);
+        Subject s2 = new Subject("Intro to discrete math and mathematical logic", ExamGrade.GOOD, false);
+        Subject s3 = new Subject("Declarative programming", DifCreditGrade.EXCELLENT, false);
+        Subject s4 = new Subject("Imperative programming", DifCreditGrade.GOOD, false);
+        Subject s5 = new Subject("Foreign language", CreditGrade.PASSED, false);
+        Subject s6 = new Subject("History", DifCreditGrade.GOOD, true);
+        Subject s7 = new Subject("Basics of speech culture", DifCreditGrade.EXCELLENT, true);
+        Subject s8 = new Subject("Physical Culture and sport", CreditGrade.PASSED, false);
+        Subject s9 = new Subject("Digital platforms", CreditGrade.PASSED, false);
 
         gb.addSubject(s1, 1);
         gb.addSubject(s2, 1);
@@ -35,13 +35,13 @@ public class GradeBookTest {
         gb.addSubject(s8, 1);
         gb.addSubject(s9, 1);
 
-        Subject s10 = new Subject("Intro to algebra and analysis", Grade.GOOD, AttestationForm.EXAM, true);
-        Subject s11 = new Subject("Intro to discrete math and mathematical logic", Grade.GOOD, AttestationForm.EXAM, true);
-        Subject s12 = new Subject("Declarative programming", Grade.EXCELLENT, AttestationForm.DIF_CREDIT, true);
-        Subject s13 = new Subject("Imperative programming", Grade.GOOD, AttestationForm.EXAM, true);
-        Subject s14 = new Subject("Physical Culture and sport", Grade.PASSED, AttestationForm.CREDIT, false);
-        Subject s15 = new Subject("Foreign language", Grade.GOOD, AttestationForm.DIF_CREDIT, false);
-        Subject s16 = new Subject("Digital platforms", Grade.GOOD, AttestationForm.DIF_CREDIT, true);
+        Subject s10 = new Subject("Intro to algebra and analysis", ExamGrade.GOOD, true);
+        Subject s11 = new Subject("Intro to discrete math and mathematical logic", ExamGrade.GOOD, true);
+        Subject s12 = new Subject("Declarative programming", DifCreditGrade.EXCELLENT, true);
+        Subject s13 = new Subject("Imperative programming", ExamGrade.GOOD, true);
+        Subject s14 = new Subject("Physical Culture and sport", CreditGrade.PASSED, false);
+        Subject s15 = new Subject("Foreign language", DifCreditGrade.GOOD, false);
+        Subject s16 = new Subject("Digital platforms", DifCreditGrade.GOOD, true);
 
         gb.addSubject(s10, 2);
         gb.addSubject(s11, 2);
