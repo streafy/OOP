@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -203,20 +203,28 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSemesterSubjectsCountByType(ru.nsu.fit.AttestationForm,int)">getSemesterSubjectsCountByType</a></span>&#8203;(<a href="AttestationForm.html" title="enum in ru.nsu.fit">AttestationForm</a>&nbsp;type,
+                              int&nbsp;semesterNumber)</code></th>
+<td class="colLast">
+<div class="block">Get number of subjects of given type in given semester.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasScholarship()">hasScholarship</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Student has scholarship in current semester.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isRedDiploma()">isRedDiploma</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Student can get red diploma.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -348,6 +356,24 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if student has scholarship in current semester, false otherwise</dd>
+</dl>
+</li>
+</ul>
+<a id="getSemesterSubjectsCountByType(ru.nsu.fit.AttestationForm,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSemesterSubjectsCountByType</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getSemesterSubjectsCountByType&#8203;(<a href="AttestationForm.html" title="enum in ru.nsu.fit">AttestationForm</a>&nbsp;type,
+                                          int&nbsp;semesterNumber)</pre>
+<div class="block">Get number of subjects of given type in given semester.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - type of subject (it's attestation form)</dd>
+<dd><code>semesterNumber</code> - number of semester from which we get subjects</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>if student has scholarship then true, false otherwise</dd>
 </dl>
 </li>
 </ul>
