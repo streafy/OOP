@@ -163,6 +163,17 @@ public class GradeBook {
     }
 
     /**
+     * Get number of subjects of given type in given semester.
+     *
+     * @param type type of subject (it's attestation form)
+     * @param semesterNumber number of semester from which we get subjects
+     * @return if student has scholarship then true, false otherwise
+     */
+    public int getSemesterSubjectsCountByType(AttestationForm type, int semesterNumber) {
+        return 0;
+    }
+
+    /**
      * Returns String representation of GradeBook.
      *
      * @return String representation of GradeBook

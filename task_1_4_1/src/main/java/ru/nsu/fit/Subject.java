@@ -6,13 +6,18 @@ package ru.nsu.fit;
 public class Subject {
     private final String name;
     private Grade grade;
-    private final AttestationForm attestationForm;
     private final boolean isFinalSemester;
 
-    public Subject(String name, Grade grade, AttestationForm attestationForm, boolean isFinalSemester) {
+    /**
+     * Subject Constructor.
+     *
+     * @param name name of the subject
+     * @param grade grade for that subject
+     * @param isFinalSemester is final semester for this subject
+     */
+    public Subject(String name, Grade grade, boolean isFinalSemester) {
         this.name = name;
         this.grade = grade;
-        this.attestationForm = attestationForm;
         this.isFinalSemester = isFinalSemester;
     }
 
@@ -59,6 +64,6 @@ public class Subject {
      */
     @Override
     public String toString() {
-        return name + " - " + grade + " - " + attestationForm;
+        return name + " - " + grade + " - " + grade.getAttestationForm();
     }
 }
