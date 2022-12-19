@@ -58,6 +58,15 @@ public class Subject {
     }
 
     /**
+     * Returns attestation form for the subject.
+     *
+     * @return attestation form for the subject
+     */
+    public AttestationForm getAttestationForm() {
+        return grade.getAttestationForm();
+    }
+
+    /**
      * Returns String representation of Subject.
      *
      * @return String representation of Subject
