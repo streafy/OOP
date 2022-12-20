@@ -2,12 +2,12 @@ package ru.nsu.fit;
 
 import java.util.*;
 
-
-//todo: add support for functions (log, pow, sqrt, sin, cos).
 /**
  * Prefix calculator implementation.
  */
 public class Calculator {
+    Deque<Double> stack = new ArrayDeque<>();
+
     /**
      * Evaluates prefix arithmetic expression.
      *
@@ -19,7 +19,6 @@ public class Calculator {
         Collections.reverse(tokens);
         String reversed = String.join(" ", tokens);
 
-        Deque<Double> stack = new ArrayDeque<>();
         Scanner scanner = new Scanner(reversed);
         scanner.useLocale(Locale.US);
 
@@ -27,36 +26,73 @@ public class Calculator {
             if (scanner.hasNextDouble()) {
                 stack.push(scanner.nextDouble());
             } else {
-                String operation = scanner.next();
+                String token = scanner.next();
 
-                if (stack.isEmpty()) {
-                    scanner.close();
-                    throw new IllegalArgumentException("Incorrect expression - too many operations");
-                }
-                double operand1 = stack.pop();
+                if (isFunction(token)) {
+                    if (stack.isEmpty()) {
+                        scanner.close();
+                        throw new IllegalArgumentException("Incorrect expression - too many operations or functions");
+                    }
 
-                if (stack.isEmpty()) {
-                    scanner.close();
-                    throw new IllegalArgumentException("Incorrect expression - too many operations");
-                }
-                double operand2 = stack.pop();
+                    double operand = stack.pop();
 
-                switch (operation) {
-                    case "+":
-                        stack.push(operand1 + operand2);
-                        break;
-                    case "-":
-                        stack.push(operand1 - operand2);
-                        break;
-                    case "*":
-                        stack.push(operand1 * operand2);
-                        break;
-                    case "/":
-                        stack.push(operand1 / operand2);
-                        break;
+                    switch (token) {
+                        case "log":
+                            stack.push(Math.log(operand));
+                            break;
+                        case "pow":
+                            if (stack.isEmpty()) {
+                                scanner.close();
+                                throw new IllegalArgumentException("Incorrect expression - too many operations or functions");
+                            }
+                            double power = stack.pop();
+                            stack.push(Math.pow(operand, power));
+                            break;
+                        case "sqrt":
+                            stack.push(Math.sqrt(operand));
+                            break;
+                        case "sin":
+                            stack.push(Math.sin(operand));
+                            break;
+                        case "cos":
+                            stack.push(Math.cos(operand));
+                            break;
+                    }
+                } else {
+                    if (stack.isEmpty()) {
+                        scanner.close();
+                        throw new IllegalArgumentException("Incorrect expression - too many operations or functions");
+                    }
+                    double operand1 = stack.pop();
+
+                    if (stack.isEmpty()) {
+                        scanner.close();
+                        throw new IllegalArgumentException("Incorrect expression - too many operations or functions");
+                    }
+                    double operand2 = stack.pop();
+
+                    switch (token) {
+                        case "+":
+                            stack.push(operand1 + operand2);
+                            break;
+                        case "-":
+                            stack.push(operand1 - operand2);
+                            break;
+                        case "*":
+                            stack.push(operand1 * operand2);
+                            break;
+                        case "/":
+                            stack.push(operand1 / operand2);
+                            break;
+                    }
                 }
             }
         }
         return stack.pop();
+    }
+
+    private boolean isFunction(String token) {
+        Set<String> functions = new HashSet<>(Arrays.asList("log", "pow", "sqrt", "sin", "cos"));
+        return functions.contains(token);
     }
 }
