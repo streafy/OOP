@@ -3,6 +3,7 @@ package ru.nsu.fit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.nsu.fit.algorithms.Algorithm;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -15,8 +16,8 @@ public class SubstringFinderTest {
     private static final String pattern = "aba";
 
     private static Stream<SubstringFinder> substringFinderStream() {
-        return Stream.of(new SubstringFinder("AC", pattern),
-                new SubstringFinder("KMP", pattern));
+        return Stream.of(new SubstringFinder(Algorithm.AhoCorasick, pattern),
+                new SubstringFinder(Algorithm.KnuthMorrisPratt, pattern));
     }
 
     @ParameterizedTest

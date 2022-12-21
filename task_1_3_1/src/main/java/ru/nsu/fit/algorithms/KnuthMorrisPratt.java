@@ -23,7 +23,9 @@ public class KnuthMorrisPratt implements SubstringFinderAlgorithm {
         patternLength = pattern.length();
 
         prefix.add(0);
-        concatString.chars().skip(1).forEach(c -> prefix.add(prefixFunction((char) c, processedCount++)));
+        concatString.chars()
+                    .skip(1)
+                    .forEach(c -> prefix.add(prefixFunction((char) c, processedCount++)));
     }
 
     private int prefixFunction(char c, int i) {

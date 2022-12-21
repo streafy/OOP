@@ -1,6 +1,7 @@
 package ru.nsu.fit;
 
 import ru.nsu.fit.algorithms.AhoCorasick;
+import ru.nsu.fit.algorithms.Algorithm;
 import ru.nsu.fit.algorithms.KnuthMorrisPratt;
 import ru.nsu.fit.algorithms.SubstringFinderAlgorithm;
 
@@ -22,16 +23,14 @@ public class SubstringFinder {
      * @param algorithm algorithm for substring finder
      * @param pattern pattern for substring finder
      */
-    public SubstringFinder(String algorithm, String pattern) {
+    public SubstringFinder(Algorithm algorithm, String pattern) {
         switch (algorithm) {
-            case "AC":
+            case AhoCorasick:
                 finder = new AhoCorasick(pattern);
                 break;
-            case "KMP":
+            case KnuthMorrisPratt:
                 finder = new KnuthMorrisPratt(pattern);
                 break;
-            default:
-                throw new IllegalArgumentException("Unsupported algorithm");
         }
     }
 
