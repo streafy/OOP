@@ -25,10 +25,10 @@ public class SubstringFinder {
      */
     public SubstringFinder(Algorithm algorithm, String pattern) {
         switch (algorithm) {
-            case AhoCorasick:
+            case AHO_CORASICK:
                 finder = new AhoCorasick(pattern);
                 break;
-            case KnuthMorrisPratt:
+            case KNUTH_MORRIS_PRATT:
                 finder = new KnuthMorrisPratt(pattern);
                 break;
         }

@@ -16,8 +16,8 @@ public class SubstringFinderTest {
     private static final String pattern = "aba";
 
     private static Stream<SubstringFinder> substringFinderStream() {
-        return Stream.of(new SubstringFinder(Algorithm.AhoCorasick, pattern),
-                new SubstringFinder(Algorithm.KnuthMorrisPratt, pattern));
+        return Stream.of(new SubstringFinder(Algorithm.AHO_CORASICK, pattern),
+                new SubstringFinder(Algorithm.KNUTH_MORRIS_PRATT, pattern));
     }
 
     @ParameterizedTest
