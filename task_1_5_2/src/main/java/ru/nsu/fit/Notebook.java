@@ -5,20 +5,24 @@ import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Notebook implementation.
+ */
 public class Notebook {
     private final List<Note> notes = new ArrayList<>();
 
-    public void addNote(Note note) {
-        notes.add(note);
+    public void addNote(String title, String description) {
+        notes.add(new Note(title, description));
     }
 
-    public void removeNote(String name) {
+    public void removeNote(String title) {
         notes.remove(notes.stream()
-                          .filter(n -> n.getName()
-                                        .equals(name))
+                          .filter(n -> n.getTitle()
+                                        .equals(title))
                           .findAny()
                           .orElseThrow());
     }
@@ -27,8 +31,19 @@ public class Notebook {
         notes.forEach(System.out::println);
     }
 
+    public void show(LocalDateTime from, LocalDateTime to, List<String> keywords) {
+        notes.stream()
+             .filter(note ->
+                     from.isBefore(note.getDate())
+                             && to.isAfter(note.getDate())
+                             && keywords.stream()
+                                        .anyMatch(note.getTitle()::contains))
+             .forEach(System.out::println);
+    }
+
     private void serialize() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting()
+                                     .create();
 
         String filename = "src/main/java/ru/nsu/fit/data/notebook.json";
 

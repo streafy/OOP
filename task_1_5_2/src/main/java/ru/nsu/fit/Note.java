@@ -1,18 +1,24 @@
 package ru.nsu.fit;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Note {
-    private String name;
+    private String title;
     private String description;
-    private Date date;
+    private LocalDateTime date;
 
-    public String getName() {
-        return name;
+    public Note(String title, String description) {
+        this.title = title;
+        this.description = description;
+        this.date = LocalDateTime.now();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -23,11 +29,11 @@ public class Note {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }
