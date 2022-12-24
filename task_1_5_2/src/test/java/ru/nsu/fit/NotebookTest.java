@@ -13,11 +13,8 @@ public class NotebookTest {
     @Test
     public void testNote() {
         Note note = new Note("Note", "Description");
-        LocalDateTime dateTime = LocalDateTime.now();
 
         System.out.println(note);
-
-        Assertions.assertEquals(dateTime, note.getCreationDate());
 
         Assertions.assertEquals("Note", note.getTitle());
         Assertions.assertEquals("Description", note.getDescription());
