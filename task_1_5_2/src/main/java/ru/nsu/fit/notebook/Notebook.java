@@ -2,18 +2,33 @@ package ru.nsu.fit.notebook;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import ru.nsu.fit.serialization.LocalDateTimeDeserializer;
+import ru.nsu.fit.serialization.LocalDateTimeSerializer;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Notebook implementation.
  */
 public class Notebook {
-    private final List<Note> notes = new ArrayList<>();
+    private final List<Note> notes;
+
+    private static final String FILENAME = "task_1_5_2/src/main/java/ru/nsu/fit/data/notebook.json";
+
+    /**
+     * Notebook constructor
+     */
+    public Notebook() {
+        notes = Objects.requireNonNullElseGet(deserialize(), ArrayList::new);
+    }
 
     /**
      * Adds new Note to the Notebook.
@@ -23,6 +38,7 @@ public class Notebook {
      */
     public void addNote(String title, String description) {
         notes.add(new Note(title, description));
+        serialize();
     }
 
     /**
@@ -34,8 +50,9 @@ public class Notebook {
         notes.remove(notes.stream()
                           .filter(n -> n.getTitle()
                                         .equals(title))
-                          .findAny()
+                          .findFirst()
                           .orElseThrow());
+        serialize();
     }
 
     /**
@@ -62,16 +79,33 @@ public class Notebook {
              .forEach(System.out::println);
     }
 
-    private void serialize() {
+    public void serialize() {
         Gson gson = new GsonBuilder().setPrettyPrinting()
+                                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                                      .create();
 
-        String filename = "src/main/java/ru/nsu/fit/data/notebook.json";
-
-        try (FileWriter writer = new FileWriter(filename)) {
+        try (FileWriter writer = new FileWriter(FILENAME)) {
             gson.toJson(notes, writer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<Note> deserialize() {
+        Gson gson = new GsonBuilder().setPrettyPrinting()
+                                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
+                                     .create();
+
+        List<Note> notes;
+
+        try (JsonReader reader = new JsonReader(new FileReader(FILENAME))) {
+            TypeToken<List<Note>> notesListType = new TypeToken<>() {
+            };
+            notes = gson.fromJson(reader, notesListType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return notes;
     }
 }

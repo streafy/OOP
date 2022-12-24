@@ -69,9 +69,10 @@ public class Note {
 
     @Override
     public String toString() {
-        return "Title            | " + title + "\n" +
-               "Description      | " + description + "\n" +
-               "Date of creation | " + creationDate.getDayOfMonth() + "." + creationDate.getMonthValue() + "."
-                + creationDate.getYear() + " " + creationDate.getHour() + ":" + creationDate.getMinute() + "\n";
+        return "Title            | " + title + "\n"
+             + "Description      | " + description + "\n"
+             + "Date of creation | " + creationDate.getDayOfMonth() + "."
+             + creationDate.getMonthValue() + "." + creationDate.getYear() + " "
+             + creationDate.getHour() + ":" + creationDate.getMinute() + "\n";
     }
 }
