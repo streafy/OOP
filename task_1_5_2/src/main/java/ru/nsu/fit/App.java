@@ -3,6 +3,7 @@ package ru.nsu.fit;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
+import ru.nsu.fit.notebook.Note;
 import ru.nsu.fit.notebook.Notebook;
 
 import java.time.LocalDateTime;

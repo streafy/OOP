@@ -26,7 +26,7 @@ public class Notebook {
      * Notebook constructor.
      */
     public Notebook() {
-        this("task_1_5_2/src/main/java/ru/nsu/fit/data/notebook.json");
+        this("src/main/java/ru/nsu/fit/data/notebook.json");
     }
 
     /**
@@ -88,6 +88,11 @@ public class Notebook {
              .forEach(System.out::println);
     }
 
+    /**
+     * Gets all Notes from Notebook.
+     *
+     * @return list of notes
+     */
     public List<Note> getNotes() {
         return notes;
     }
