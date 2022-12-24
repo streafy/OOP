@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.fit","l":"App"},{"p":"ru.nsu.fit.serialization","l":"LocalDateTimeDeserializer"},{"p":"ru.nsu.fit.serialization","l":"LocalDateTimeSerializer"},{"p":"ru.nsu.fit.notebook","l":"Note"},{"p":"ru.nsu.fit.notebook","l":"Notebook"}]
