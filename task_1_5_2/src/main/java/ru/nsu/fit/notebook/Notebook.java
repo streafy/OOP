@@ -63,13 +63,13 @@ public class Notebook {
     }
 
     /**
-     * Prints Notes sorted by date and keywords.
+     * Prints Notes filtered by date and keywords.
      *
      * @param after    Notes with creation date after this date will be printed
      * @param before   Notes with creation date before this date will be printed
      * @param keywords Notes with title containing any of the keywords will be printed
      */
-    public void showSorted(LocalDateTime after, LocalDateTime before, List<String> keywords) {
+    public void showFiltered(LocalDateTime after, LocalDateTime before, List<String> keywords) {
         notes.stream()
              .filter(note ->
                      after.isBefore(note.getCreationDate())
@@ -79,7 +79,10 @@ public class Notebook {
              .forEach(System.out::println);
     }
 
-    public void serialize() {
+    /**
+     * Serializes list of Notes from Notebook to the json file.
+     */
+    private void serialize() {
         Gson gson = new GsonBuilder().setPrettyPrinting()
                                      .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                                      .create();
@@ -91,6 +94,9 @@ public class Notebook {
         }
     }
 
+    /**
+     * Deserializes list of Notes from the json file.
+     */
     private List<Note> deserialize() {
         Gson gson = new GsonBuilder().setPrettyPrinting()
                                      .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())

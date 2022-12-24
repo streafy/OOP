@@ -25,7 +25,7 @@ public class NotebookTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("Test");
         keywords.add("Qwer");
-        notebook.showSorted(LocalDateTime.of(from, noon), LocalDateTime.of(to, noon), keywords);
+        notebook.showFiltered(LocalDateTime.of(from, noon), LocalDateTime.of(to, noon), keywords);
 
         notebook.removeNote("Qwer 3");
 
