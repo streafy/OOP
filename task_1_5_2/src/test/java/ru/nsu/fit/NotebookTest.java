@@ -1,34 +1,41 @@
 package ru.nsu.fit;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.nsu.fit.notebook.Note;
 import ru.nsu.fit.notebook.Notebook;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NotebookTest {
-    Notebook notebook = new Notebook();
+    Notebook notebook = new Notebook("src/main/java/ru/nsu/fit/data/notebook.json");
 
     @Test
-    public void test() {
-        notebook.addNote("Test 1", "description");
-        notebook.addNote("Note 2", "description");
-        notebook.addNote("Qwer 3", "description");
+    public void testNote() {
+        Note note = new Note("Note", "Description");
+        LocalDateTime dateTime = LocalDateTime.now();
 
-        LocalDate from = LocalDate.of(2022, 12, 23);
-        LocalDate to = LocalDate.of(2022, 12, 25);
-        LocalTime noon = LocalTime.of(0, 0);
+        System.out.println(note);
 
-        List<String> keywords = new ArrayList<>();
-        keywords.add("Test");
-        keywords.add("Qwer");
-        notebook.showFiltered(LocalDateTime.of(from, noon), LocalDateTime.of(to, noon), keywords);
+        Assertions.assertEquals(dateTime, note.getCreationDate());
 
-        notebook.removeNote("Qwer 3");
+        Assertions.assertEquals("Note", note.getTitle());
+        Assertions.assertEquals("Description", note.getDescription());
 
-        notebook.show();
+        note.setTitle("Changed");
+        note.setDescription("Changed");
+
+        Assertions.assertEquals("Changed", note.getTitle());
+        Assertions.assertEquals("Changed", note.getDescription());
+    }
+
+    @Test
+    public void testNotebook() {
+        int initialSize = notebook.getNotes().size();
+
+        notebook.addNote("TEST", "123");
+        Assertions.assertEquals(initialSize + 1, notebook.getNotes().size());
+        notebook.removeNote("TEST");
+        Assertions.assertEquals(initialSize, notebook.getNotes().size());
     }
 }

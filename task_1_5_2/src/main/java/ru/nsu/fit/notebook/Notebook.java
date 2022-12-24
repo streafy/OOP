@@ -20,13 +20,22 @@ import java.util.Objects;
  */
 public class Notebook {
     private final List<Note> notes;
-
-    private static final String FILENAME = "task_1_5_2/src/main/java/ru/nsu/fit/data/notebook.json";
+    private final String filename;
 
     /**
-     * Notebook constructor
+     * Notebook constructor.
      */
     public Notebook() {
+        this("task_1_5_2/src/main/java/ru/nsu/fit/data/notebook.json");
+    }
+
+    /**
+     * Notebook constructor.
+     *
+     * @param filename file path where Notebook will be saved
+     */
+    public Notebook(String filename) {
+        this.filename = filename;
         notes = Objects.requireNonNullElseGet(deserialize(), ArrayList::new);
     }
 
@@ -42,16 +51,16 @@ public class Notebook {
     }
 
     /**
-     * Removes Note from the Notebook by title.
+     * Removes first Note from the Notebook by given title.
      *
      * @param title title of the Note to be deleted
      */
     public void removeNote(String title) {
-        notes.remove(notes.stream()
-                          .filter(n -> n.getTitle()
-                                        .equals(title))
-                          .findFirst()
-                          .orElseThrow());
+        notes.stream()
+             .filter(n -> n.getTitle()
+                           .equals(title))
+             .findFirst()
+             .ifPresent(notes::remove);
         serialize();
     }
 
@@ -79,6 +88,10 @@ public class Notebook {
              .forEach(System.out::println);
     }
 
+    public List<Note> getNotes() {
+        return notes;
+    }
+
     /**
      * Serializes list of Notes from Notebook to the json file.
      */
@@ -87,7 +100,7 @@ public class Notebook {
                                      .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                                      .create();
 
-        try (FileWriter writer = new FileWriter(FILENAME)) {
+        try (FileWriter writer = new FileWriter(filename)) {
             gson.toJson(notes, writer);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -104,7 +117,7 @@ public class Notebook {
 
         List<Note> notes;
 
-        try (JsonReader reader = new JsonReader(new FileReader(FILENAME))) {
+        try (JsonReader reader = new JsonReader(new FileReader(filename))) {
             TypeToken<List<Note>> notesListType = new TypeToken<>() {
             };
             notes = gson.fromJson(reader, notesListType);

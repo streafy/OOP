@@ -24,7 +24,7 @@ public class App implements Runnable {
      * @return 0
      */
     @Command(name = "-add")
-    public Integer add(
+    private Integer add(
             @Parameters() String title,
             @Parameters() String description
     ) {
@@ -40,7 +40,7 @@ public class App implements Runnable {
      * @return 0
      */
     @Command(name = "-rm")
-    public Integer rm(
+    private Integer rm(
             @Parameters() String title
     ) {
         System.out.println("Remove note with title: " + title);
@@ -57,7 +57,7 @@ public class App implements Runnable {
      * @return 0
      */
     @Command(name = "-show")
-    public Integer show(
+    private Integer show(
             @Parameters(index = "0", arity = "0..1") String after,
             @Parameters(index = "1", arity = "0..1") String before,
             @Parameters(index = "2..*", arity = "0..1") List<String> keywords
