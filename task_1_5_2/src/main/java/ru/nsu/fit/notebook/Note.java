@@ -1,4 +1,4 @@
-package ru.nsu.fit;
+package ru.nsu.fit.notebook;
 
 import java.time.LocalDateTime;
 
@@ -71,7 +71,7 @@ public class Note {
     public String toString() {
         return "Title            | " + title + "\n" +
                "Description      | " + description + "\n" +
-               "Date of creation | " + creationDate.getDayOfMonth() + "." + creationDate.getMonthValue() + "." + creationDate.getYear() + " " +
-                creationDate.getHour() + ":" + creationDate.getMinute() + "\n";
+               "Date of creation | " + creationDate.getDayOfMonth() + "." + creationDate.getMonthValue() + "."
+                + creationDate.getYear() + " " + creationDate.getHour() + ":" + creationDate.getMinute() + "\n";
     }
 }

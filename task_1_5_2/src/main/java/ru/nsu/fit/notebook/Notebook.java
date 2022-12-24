@@ -1,4 +1,4 @@
-package ru.nsu.fit;
+package ru.nsu.fit.notebook;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +18,7 @@ public class Notebook {
     /**
      * Adds new Note to the Notebook.
      *
-     * @param title title of the new Note
+     * @param title       title of the new Note
      * @param description description of the new Note
      */
     public void addNote(String title, String description) {
@@ -48,8 +48,8 @@ public class Notebook {
     /**
      * Prints Notes sorted by date and keywords.
      *
-     * @param after Notes with creation date after this date will be printed
-     * @param before Notes with creation date before this date will be printed
+     * @param after    Notes with creation date after this date will be printed
+     * @param before   Notes with creation date before this date will be printed
      * @param keywords Notes with title containing any of the keywords will be printed
      */
     public void showSorted(LocalDateTime after, LocalDateTime before, List<String> keywords) {

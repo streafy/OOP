@@ -1,6 +1,7 @@
 package ru.nsu.fit;
 
 import org.junit.jupiter.api.Test;
+import ru.nsu.fit.notebook.Notebook;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
