@@ -79,6 +79,9 @@ public class Notebook {
      * @param keywords Notes with title containing any of the keywords will be printed
      */
     public void showFiltered(LocalDateTime after, LocalDateTime before, List<String> keywords) {
+        if (after == null || before == null) {
+            throw new IllegalArgumentException("LocalDateTime can't be null");
+        }
         notes.stream()
              .filter(note ->
                      after.isBefore(note.getCreationDate())

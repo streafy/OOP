@@ -2,8 +2,9 @@ package ru.nsu.fit;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
-import ru.nsu.fit.notebook.Note;
+import picocli.CommandLine.ParseResult;
 import ru.nsu.fit.notebook.Notebook;
 
 import java.time.LocalDateTime;
@@ -15,12 +16,15 @@ import java.util.List;
  */
 @Command(name = "notebook")
 public class App implements Runnable {
-    private final Notebook notebook = new Notebook();
+    @Option(names = { "-f", "--file" })
+    private String filename;
+
+    private Notebook notebook;
 
     /**
      * Adds new note to Notebook.
      *
-     * @param title note's title
+     * @param title       note's title
      * @param description note's description
      * @return 0
      */
@@ -29,7 +33,6 @@ public class App implements Runnable {
             @Parameters() String title,
             @Parameters() String description
     ) {
-        System.out.println("Adding note: " + title + " " + description);
         notebook.addNote(title, description);
         return 0;
     }
@@ -44,7 +47,6 @@ public class App implements Runnable {
     private Integer rm(
             @Parameters() String title
     ) {
-        System.out.println("Remove note with title: " + title);
         notebook.removeNote(title);
         return 0;
     }
@@ -59,18 +61,31 @@ public class App implements Runnable {
      */
     @Command(name = "-show")
     private Integer show(
-            @Parameters(index = "0", arity = "0..1") String after,
-            @Parameters(index = "1", arity = "0..1") String before,
+            @Parameters(index = "0", arity = "0..1") LocalDateTime after,
+            @Parameters(index = "1", arity = "0..1") LocalDateTime before,
             @Parameters(index = "2..*", arity = "0..1") List<String> keywords
     ) {
         if (after == null && before == null && keywords == null) {
             notebook.show();
         } else {
-            LocalDateTime afterDate = LocalDateTime.parse(after, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
-            LocalDateTime beforeDate = LocalDateTime.parse(before, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
-            notebook.showFiltered(afterDate, beforeDate, keywords);
+            notebook.showFiltered(after, before, keywords);
         }
         return 0;
+    }
+
+    /**
+     * Custom execution strategy.
+     */
+    private int executionStrategy(ParseResult parseResult) {
+        init();
+        return new CommandLine.RunLast().execute(parseResult);
+    }
+
+    /**
+     * Initialize notebook for every subcommand.
+     */
+    private void init() {
+        notebook = (filename == null) ? new Notebook() : new Notebook(filename);
     }
 
     /**
@@ -87,7 +102,14 @@ public class App implements Runnable {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        int exitCode = new CommandLine(new App()).execute(args);
+        App app = new App();
+        int exitCode = new CommandLine(app)
+                .registerConverter(
+                        LocalDateTime.class,
+                        s -> LocalDateTime.parse(s, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+                )
+                .setExecutionStrategy(app::executionStrategy)
+                .execute(args);
         System.exit(exitCode);
     }
 }
