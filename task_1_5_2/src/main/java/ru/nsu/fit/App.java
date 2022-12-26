@@ -61,9 +61,9 @@ public class App implements Runnable {
      */
     @Command(name = "-show")
     private Integer show(
-            @Parameters(index = "0", arity = "0..1") LocalDateTime after,
-            @Parameters(index = "1", arity = "0..1") LocalDateTime before,
-            @Parameters(index = "2..*", arity = "0..1") List<String> keywords
+            @Option(names = { "-a", "--after" }) LocalDateTime after,
+            @Option(names = { "-b", "--before" }) LocalDateTime before,
+            @Parameters() List<String> keywords
     ) {
         if (after == null && before == null && keywords == null) {
             notebook.show();

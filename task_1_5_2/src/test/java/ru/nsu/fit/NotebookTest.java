@@ -53,6 +53,6 @@ public class NotebookTest {
         App.main(new String[] { "-add", "Note", "Desc"});
         App.main(new String[] { "-rm", "Note"});
         App.main(new String[] { "-show" });
-        App.main(new String[] { "-show", "24.12.2022 23:00", "24.12.2022 23:30", "Note", "Test" });
+        App.main(new String[] { "-show", "-a", "24.12.2022 23:00", "-b", "24.12.2022 23:30", "Note", "Test" });
     }
 }
