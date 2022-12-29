@@ -2,13 +2,23 @@ package ru.nsu.fit.functions;
 
 import java.util.List;
 
-public record Number(double value) implements Function {
+public class Number implements Function {
+    double value;
+
+    /**
+     * Number constructor.
+     *
+     * @param value
+     */
+    public Number(double value) {
+        this.value = value;
+    }
+
     /**
      * Get value of Number
      *
      * @return double value of Number
      */
-    @Override
     public double value() {
         return value;
     }
