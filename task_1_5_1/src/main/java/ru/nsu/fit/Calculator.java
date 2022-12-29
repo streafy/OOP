@@ -12,6 +12,9 @@ public class Calculator {
     Deque<Number> stack = new ArrayDeque<>();
     List<Function> templates = new ArrayList<>();
 
+    /**
+     * Calculator constructor.
+     */
     public Calculator() {
         templates.add(new Number(0));
         templates.add(new Plus());
