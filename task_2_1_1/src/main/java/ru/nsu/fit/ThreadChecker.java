@@ -3,6 +3,7 @@ package ru.nsu.fit;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ThreadChecker implements ArrayNonPrimeChecker {
@@ -31,7 +32,7 @@ public class ThreadChecker implements ArrayNonPrimeChecker {
         List<Thread> threads = Stream.generate(() -> new Thread(r))
                                      .limit(threadCount)
                                      .peek(Thread::start)
-                                     .toList();
+                                     .collect(Collectors.toList());
 
 
         for (Thread thread : threads) {
