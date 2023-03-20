@@ -6,16 +6,19 @@ import org.openjdk.jmh.annotations.*;
 public class ArrayNonPrimeThreadChecker {
 
     private static final int LARGE_PRIME = 1000000007;
-    private static final int NUMBERS_COUNT = 100000;
-
-    private static final int[] benchmarkArray = new int[NUMBERS_COUNT];
 
     @Param({ "1", "2", "4", "6", "8", "12", "16" })
     private int threadCount;
 
+    @Param({ "100", "1000", "10000", "100000" })
+    private int arraySize;
+
+    private int[] benchmarkArray;
+
     @Setup
     public void loadArray() {
-        for (int i = 0; i < NUMBERS_COUNT; i++) {
+        benchmarkArray = new int[arraySize];
+        for (int i = 0; i < arraySize; i++) {
             benchmarkArray[i] = LARGE_PRIME;
         }
     }
