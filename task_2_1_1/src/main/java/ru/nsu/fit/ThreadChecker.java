@@ -2,7 +2,6 @@ package ru.nsu.fit;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,26 +13,33 @@ public class ThreadChecker implements ArrayNonPrimeChecker {
         this.threadCount = threadCount;
     }
 
-    @Override
-    public boolean hasNonPrime(int[] array) {
-        AtomicBoolean hasNonPrime = new AtomicBoolean(false);
-        AtomicInteger nextIndex = new AtomicInteger(0);
-
-        Runnable r = () -> {
-            while (nextIndex.get() < array.length) {
-                int currentIndex = nextIndex.getAndIncrement();
-                //System.out.println("Is non-prime: " + array[currentIndex] + " = " + Shared.isNonPrime(array[currentIndex]) + ", " + Thread.currentThread().getName());
-                if (Shared.isNonPrime(array[currentIndex])) {
+    private Runnable createRunnable(AtomicBoolean hasNonPrime, int[] array, int left, int right) {
+        return () -> {
+            for (int i = left; i < right; i++) {
+                if (Shared.isNonPrime(array[i])) {
                     hasNonPrime.set(true);
+                    break;
                 }
             }
         };
+    }
 
-        List<Thread> threads = Stream.generate(() -> new Thread(r))
+    @Override
+    public boolean hasNonPrime(int[] array) {
+        AtomicBoolean hasNonPrime = new AtomicBoolean(false);
+
+        int interval = array.length / threadCount;
+        int rest = array.length % threadCount;
+
+        List<Thread> threads = Stream.iterate(0, i -> i + 1)
                                      .limit(threadCount)
+                                     .map(i -> {
+                                         int left = i * interval;
+                                         int right = (i + 1) * interval + ((i + 1) == threadCount ? rest : 0);
+                                         return new Thread(createRunnable(hasNonPrime, array, left, right));
+                                     })
                                      .peek(Thread::start)
                                      .collect(Collectors.toList());
-
 
         for (Thread thread : threads) {
             try {
