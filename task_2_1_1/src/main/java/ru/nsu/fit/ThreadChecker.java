@@ -41,11 +41,13 @@ public class ThreadChecker implements ArrayNonPrimeChecker {
                                      .peek(Thread::start)
                                      .collect(Collectors.toList());
 
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        while (true) {
+            if (!threads.stream().allMatch(Thread::isAlive)) {
+                break;
+            }
+            if (hasNonPrime.get()) {
+                threads.forEach(Thread::interrupt);
+                break;
             }
         }
 
