@@ -8,7 +8,7 @@ public class ArrayNonPrimeThreadChecker {
     private static final int LARGE_PRIME = 1000000007;
     private static final int LARGE_NON_PRIME = 1000000000;
 
-    @Param({ "1", "2", "4", "6", "8", "12", "16" })
+    @Param({ "1", "2", "4", "6", "8", "12", "16", "256", "512", "1024" })
     private int threadCount;
 
     @Param({ "100", "1000", "10000", "100000" })
