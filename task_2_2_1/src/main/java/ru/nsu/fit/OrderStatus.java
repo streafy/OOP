@@ -1,5 +1,5 @@
 package ru.nsu.fit;
 
 public enum OrderStatus {
-    TAKEN, COOKING, READY
+    ACCEPTED, COOKING, AWAITING_DELIVERY, DELIVERING, DELIVERED
 }

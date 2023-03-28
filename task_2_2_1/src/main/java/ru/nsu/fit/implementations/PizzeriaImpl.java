@@ -1,43 +1,59 @@
 package ru.nsu.fit.implementations;
 
 import ru.nsu.fit.Order;
-import ru.nsu.fit.interfaces.Baker;
-import ru.nsu.fit.interfaces.Courier;
+import ru.nsu.fit.converters.BakerConverter;
+import ru.nsu.fit.converters.CourierConverter;
+import ru.nsu.fit.converters.WarehouseConverter;
 import ru.nsu.fit.interfaces.Pizzeria;
 import ru.nsu.fit.interfaces.Warehouse;
+import ru.nsu.fit.serialization.PizzeriaConfig;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
+import java.util.concurrent.SynchronousQueue;
 
 public class PizzeriaImpl implements Pizzeria {
 
-    private static final int DEFAULT_WAREHOUSE_CAPACITY = 50;
+    private static final String ORDER_ACCEPTED_MESSAGE_TEMPLATE = "[ORDER%s:%s] Order %s is accepted at pizzeria%n";
 
-    private final Queue<Order> orderQueue = new ArrayDeque<>();
-    private final List<Baker> bakers = new ArrayList<>();     //TODO: load from json
-    private final List<Courier> couriers = new ArrayList<>();
-    private final Warehouse warehouse = new WarehouseImpl(DEFAULT_WAREHOUSE_CAPACITY);
+    private final List<Thread> bakers;
+    private final List<Thread> couriers;
+    private final SynchronousQueue<Order> orderQueue;
+    private final Warehouse warehouse;
 
-    private int ordersTaken = 0;
-
-    public PizzeriaImpl() {
-        bakers.add(new BakerImpl(1, warehouse));
-        couriers.add(new CourierImpl(warehouse));
+    public PizzeriaImpl(PizzeriaConfig config, SynchronousQueue<Order> orderQueue) {
+        this.warehouse = WarehouseConverter.convert(config.getWarehouse());
+        this.bakers = config.getBakers()
+                .stream()
+                .map(bakerModel -> BakerConverter.convert(bakerModel, orderQueue, warehouse))
+                .toList();
+        this.couriers = config.getCouriers()
+                .stream()
+                .map(courierModel -> CourierConverter.convert(courierModel, warehouse))
+                .toList();
+        this.orderQueue = orderQueue;
     }
 
     @Override
-    public void orderPizza(int count) {
-        Order order = new Order(++ordersTaken, count);
-        System.out.println("Accepted order #" + ordersTaken + " on " + count + " pizzas");
+    public void startWorking() {
+        bakers.forEach(Thread::start);
+        couriers.forEach(Thread::start);
+    }
 
-        orderQueue.add(order);
+    @Override
+    public void orderPizza(Order order) {
+        int orderId = order.getId();
+        System.out.printf(ORDER_ACCEPTED_MESSAGE_TEMPLATE, orderId, order.getStatus(), orderId);
 
-        bakers.get(0).takeOrder(order);
+        try {
+            orderQueue.put(order);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-        couriers.get(0).deliver();
-
-        System.out.println();
+    @Override
+    public void stopWorking() {
+        bakers.forEach(Thread::interrupt);
+        couriers.forEach(Thread::interrupt);
     }
 }
