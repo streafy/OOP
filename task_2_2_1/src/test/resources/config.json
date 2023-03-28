@@ -1,0 +1,25 @@
+{
+  "bakers": [
+    {
+      "id": 1,
+      "efficiency": 50
+    },
+    {
+      "id": 2,
+      "efficiency": 100
+    }
+  ],
+  "couriers": [
+    {
+      "id": 1,
+      "trunkCapacity": 2
+    },
+    {
+      "id": 2,
+      "trunkCapacity": 5
+    }
+  ],
+  "warehouse": {
+    "capacity": 5
+  }
+}
