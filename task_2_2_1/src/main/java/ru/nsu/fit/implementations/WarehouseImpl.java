@@ -1,55 +1,61 @@
 package ru.nsu.fit.implementations;
 
 import ru.nsu.fit.Order;
+import ru.nsu.fit.OrderStatus;
 import ru.nsu.fit.interfaces.Warehouse;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import static java.lang.Thread.currentThread;
+
 public class WarehouseImpl implements Warehouse {
 
-    private int capacity;
-    private int currentLoad = 0;
+    private static final String ORDER_ACCEPTED_MESSAGE_TEMPLATE = "[ORDER%s:%s] Order %s is accepted at warehouse%n";
 
-    private final Queue<Order> readyOrders = new ArrayDeque<>();
+    private final int capacity;
+    private final Queue<Order> readyOrders;
 
     public WarehouseImpl(int capacity) {
         this.capacity = capacity;
+        this.readyOrders = new ArrayDeque<>(capacity);
     }
 
     @Override
-    public boolean reservePizzaStorage(int pizzaCount) {
-        if (currentLoad + pizzaCount > capacity) {
-            return false;
-        }
-        currentLoad += pizzaCount;
-        return true;
-    }
-
-    @Override
-    public void acceptPizza(int number, Order order) {
+    public synchronized void acceptOrder(Order order) {
         int orderId = order.getId();
-        System.out.println("Warehouse accepted pizza #" + number + " from order #" + orderId);
+        try {
+            while (this.readyOrders.size() >= this.capacity) {
+                super.wait();
+            }
 
-        if (number == order.getPizzaCount()) {
-            System.out.println("Order #" + orderId + " is ready, waiting for delivery");
-            readyOrders.add(order);
+            this.readyOrders.add(order);
+            order.changeStatus(OrderStatus.AWAITING_DELIVERY);
+            System.out.printf(ORDER_ACCEPTED_MESSAGE_TEMPLATE, orderId, order.getStatus(), orderId);
+            super.notifyAll();
+        } catch (InterruptedException e) {
+            currentThread().interrupt();
         }
     }
 
     @Override
-    public Order giveOrder() {
-        Order order = readyOrders.remove();
-        int pizzaCount = order.getPizzaCount();
+    public synchronized Order giveOrder() {
+        try {
+            while (this.readyOrders.isEmpty()) {
+                super.wait();
+            }
 
-        System.out.println("Order #" + order.getId() + " with " + pizzaCount + " pizzas was given to courier");
-        currentLoad -= pizzaCount;
-
-        return order;
+            Order givenOrder = this.readyOrders.poll();
+            super.notifyAll();
+            return givenOrder;
+        } catch (InterruptedException e) {
+            currentThread().interrupt();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public boolean isEmpty() {
-        return currentLoad == 0;
+        return readyOrders.isEmpty();
     }
 }

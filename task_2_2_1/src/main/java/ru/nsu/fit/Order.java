@@ -2,9 +2,9 @@ package ru.nsu.fit;
 
 public class Order {
 
-    private int id;
-    private OrderStatus status = OrderStatus.TAKEN;
-    private int pizzaCount;
+    private final int id;
+    private OrderStatus status = OrderStatus.ACCEPTED;
+    private final int pizzaCount;
 
     public Order(int id, int pizzaCount) {
         this.id = id;
