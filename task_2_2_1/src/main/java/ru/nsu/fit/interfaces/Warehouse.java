@@ -4,9 +4,7 @@ import ru.nsu.fit.Order;
 
 public interface Warehouse {
 
-    boolean reservePizzaStorage(int pizzaCount);
-
-    void acceptPizza(int number, Order order);
+    void acceptOrder(Order order);
 
     Order giveOrder();
 
