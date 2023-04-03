@@ -13,7 +13,7 @@ public class Baker extends Worker implements Runnable {
 
     private static final int DEFAULT_EFFICIENCY = 25;
 
-    private static final String PIZZA_BAKING_MESSAGE_TEMPLATE = "[ORDER%s:%s] Baker %s is making pizza #%s for order %s%n";
+    private static final String PIZZA_BAKED_MESSAGE_TEMPLATE = "[ORDER%s:%s] Baker %s made pizza #%s for order %s%n";
 
     private final int id;
     private final int bakingTimeInSeconds;
@@ -34,11 +34,19 @@ public class Baker extends Worker implements Runnable {
 
     @Override
     public void run() {
-        while (!currentThread().isInterrupted() && !isSoftShutdown) {
+        while (!currentThread().isInterrupted()) {
             try {
+                if (isForcedShutdown) {
+                    currentThread().interrupt();
+                    break;
+                }
                 Order order = orderQueue.take();
                 makeOrder(order);
-
+                warehouse.acceptOrder(order);
+                if (isSoftShutdown) {
+                    currentThread().interrupt();
+                    break;
+                }
             } catch (InterruptedException e) {
                 currentThread().interrupt();
             }
@@ -50,16 +58,16 @@ public class Baker extends Worker implements Runnable {
         int pizzaCount = order.getPizzaCount();
 
         order.changeStatus(OrderStatus.COOKING);
+        warehouse.reserveOrder();
         for (int i = 1; i <= pizzaCount; i++) {
             try {
                 TimeUnit.SECONDS.sleep(bakingTimeInSeconds);
-                System.out.printf(PIZZA_BAKING_MESSAGE_TEMPLATE, orderId, order.getStatus(), id, i, orderId);
+                System.out.printf(PIZZA_BAKED_MESSAGE_TEMPLATE, orderId, order.getStatus(), id, i, orderId);
 
             } catch (InterruptedException e) {
                 currentThread().interrupt();
             }
         }
 
-        warehouse.acceptOrder(order);
     }
 }

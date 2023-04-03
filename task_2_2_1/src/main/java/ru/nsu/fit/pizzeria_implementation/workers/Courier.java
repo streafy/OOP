@@ -29,7 +29,11 @@ public class Courier extends Worker implements Runnable  {
 
     @Override
     public void run() {
-        while (!currentThread().isInterrupted() && !isSoftShutdown) {
+        while (!currentThread().isInterrupted()) {
+            if ((isSoftShutdown && warehouse.isReservationEmpty()) || isForcedShutdown) {
+                currentThread().interrupt();
+                break;
+            }
             while (!warehouse.isEmpty() && trunkContent.size() < trunkCapacity) {
                 Order nextOrder = warehouse.giveOrder();
                 trunkContent.add(nextOrder);
