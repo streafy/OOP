@@ -14,6 +14,7 @@ public class WarehouseImpl implements Warehouse {
 
     private final int capacity;
     private final Queue<Order> readyOrders;
+    private int reservedOrdersCount;
 
     public WarehouseImpl(int capacity) {
         this.capacity = capacity;
@@ -29,12 +30,18 @@ public class WarehouseImpl implements Warehouse {
             }
 
             this.readyOrders.add(order);
+            this.reservedOrdersCount--;
             order.changeStatus(OrderStatus.AWAITING_DELIVERY);
             System.out.printf(ORDER_ACCEPTED_MESSAGE_TEMPLATE, orderId, order.getStatus(), orderId);
             super.notifyAll();
         } catch (InterruptedException e) {
             currentThread().interrupt();
         }
+    }
+
+    @Override
+    public synchronized void reserveOrder() {
+        this.reservedOrdersCount++;
     }
 
     @Override
@@ -56,5 +63,10 @@ public class WarehouseImpl implements Warehouse {
     @Override
     public boolean isEmpty() {
         return readyOrders.isEmpty();
+    }
+
+    @Override
+    public boolean isReservationEmpty() {
+        return reservedOrdersCount == 0;
     }
 }

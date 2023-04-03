@@ -6,7 +6,11 @@ public interface Warehouse {
 
     void acceptOrder(Order order);
 
+    void reserveOrder();
+
     Order giveOrder();
 
     boolean isEmpty();
+
+    boolean isReservationEmpty();
 }
