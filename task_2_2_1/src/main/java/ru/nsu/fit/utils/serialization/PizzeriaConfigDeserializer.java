@@ -1,4 +1,4 @@
-package ru.nsu.fit.serialization;
+package ru.nsu.fit.utils.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;

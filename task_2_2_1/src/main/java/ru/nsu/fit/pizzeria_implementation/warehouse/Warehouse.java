@@ -1,6 +1,6 @@
-package ru.nsu.fit.interfaces;
+package ru.nsu.fit.pizzeria_implementation.warehouse;
 
-import ru.nsu.fit.Order;
+import ru.nsu.fit.pizzeria_implementation.order.Order;
 
 public interface Warehouse {
 

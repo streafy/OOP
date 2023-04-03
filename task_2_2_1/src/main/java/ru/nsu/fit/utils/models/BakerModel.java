@@ -1,4 +1,4 @@
-package ru.nsu.fit.models;
+package ru.nsu.fit.utils.models;
 
 public class BakerModel {
 

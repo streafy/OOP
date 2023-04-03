@@ -1,8 +1,7 @@
-package ru.nsu.fit.implementations;
+package ru.nsu.fit.pizzeria_implementation.warehouse;
 
-import ru.nsu.fit.Order;
-import ru.nsu.fit.OrderStatus;
-import ru.nsu.fit.interfaces.Warehouse;
+import ru.nsu.fit.pizzeria_implementation.order.Order;
+import ru.nsu.fit.pizzeria_implementation.order.OrderStatus;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
