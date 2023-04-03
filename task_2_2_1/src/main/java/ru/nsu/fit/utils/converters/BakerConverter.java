@@ -13,7 +13,7 @@ public class BakerConverter {
 
     }
 
-    public static Thread convert(BakerModel from, SynchronousQueue<Order> orderQueue, Warehouse warehouse) {
-        return new Thread(new Baker(from.getId(), from.getEfficiency(), orderQueue, warehouse));
+    public static Baker convert(BakerModel from, SynchronousQueue<Order> orderQueue, Warehouse warehouse) {
+        return new Baker(from.getId(), from.getEfficiency(), orderQueue, warehouse);
     }
 }

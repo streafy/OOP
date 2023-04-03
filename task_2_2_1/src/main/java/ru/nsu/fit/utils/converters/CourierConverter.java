@@ -10,7 +10,7 @@ public class CourierConverter {
 
     }
 
-    public static Thread convert(CourierModel from, Warehouse warehouse) {
-        return new Thread(new Courier(from.getId(), from.getTrunkCapacity(), warehouse));
+    public static Courier convert(CourierModel from, Warehouse warehouse) {
+        return new Courier(from.getId(), from.getTrunkCapacity(), warehouse);
     }
 }
