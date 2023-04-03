@@ -1,12 +1,11 @@
-package ru.nsu.fit.implementations;
+package ru.nsu.fit.pizzeria_implementation.pizzeria;
 
-import ru.nsu.fit.Order;
-import ru.nsu.fit.converters.BakerConverter;
-import ru.nsu.fit.converters.CourierConverter;
-import ru.nsu.fit.converters.WarehouseConverter;
-import ru.nsu.fit.interfaces.Pizzeria;
-import ru.nsu.fit.interfaces.Warehouse;
-import ru.nsu.fit.serialization.PizzeriaConfig;
+import ru.nsu.fit.pizzeria_implementation.order.Order;
+import ru.nsu.fit.pizzeria_implementation.warehouse.Warehouse;
+import ru.nsu.fit.utils.converters.BakerConverter;
+import ru.nsu.fit.utils.converters.CourierConverter;
+import ru.nsu.fit.utils.converters.WarehouseConverter;
+import ru.nsu.fit.utils.serialization.PizzeriaConfig;
 
 import java.util.List;
 import java.util.concurrent.SynchronousQueue;
@@ -52,8 +51,15 @@ public class PizzeriaImpl implements Pizzeria {
     }
 
     @Override
-    public void stopWorking() {
+    public void stopWorkingForced() {
         bakers.forEach(Thread::interrupt);
         couriers.forEach(Thread::interrupt);
     }
+
+    @Override
+    public void stopWorkingSoft() {
+        //bakers.forEach(baker -> baker.);
+    }
+
+
 }

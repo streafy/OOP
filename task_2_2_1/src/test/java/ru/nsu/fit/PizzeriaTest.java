@@ -2,10 +2,12 @@ package ru.nsu.fit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.nsu.fit.implementations.PizzeriaImpl;
-import ru.nsu.fit.interfaces.Pizzeria;
-import ru.nsu.fit.serialization.PizzeriaConfig;
-import ru.nsu.fit.serialization.PizzeriaConfigDeserializer;
+import ru.nsu.fit.pizzeria_implementation.order.Order;
+import ru.nsu.fit.pizzeria_implementation.order.OrderStatus;
+import ru.nsu.fit.pizzeria_implementation.pizzeria.Pizzeria;
+import ru.nsu.fit.pizzeria_implementation.pizzeria.PizzeriaImpl;
+import ru.nsu.fit.utils.serialization.PizzeriaConfig;
+import ru.nsu.fit.utils.serialization.PizzeriaConfigDeserializer;
 
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
@@ -49,6 +51,6 @@ public class PizzeriaTest {
         Assertions.assertEquals(order5.getStatus(), OrderStatus.DELIVERED);
         Assertions.assertEquals(order6.getStatus(), OrderStatus.DELIVERED);
 
-        pizzeria.stopWorking();
+        pizzeria.stopWorkingForced();
     }
 }

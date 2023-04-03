@@ -1,16 +1,15 @@
-package ru.nsu.fit.implementations;
+package ru.nsu.fit.pizzeria_implementation.workers;
 
-import ru.nsu.fit.Order;
-import ru.nsu.fit.OrderStatus;
-import ru.nsu.fit.interfaces.Baker;
-import ru.nsu.fit.interfaces.Warehouse;
+import ru.nsu.fit.pizzeria_implementation.order.Order;
+import ru.nsu.fit.pizzeria_implementation.order.OrderStatus;
+import ru.nsu.fit.pizzeria_implementation.warehouse.Warehouse;
 
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.currentThread;
 
-public class BakerImpl implements Baker, Runnable {
+public class Baker extends Worker implements Runnable {
 
     private static final int DEFAULT_EFFICIENCY = 25;
 
@@ -22,11 +21,11 @@ public class BakerImpl implements Baker, Runnable {
     private final SynchronousQueue<Order> orderQueue;
     private final Warehouse warehouse;
 
-    public BakerImpl(int id, SynchronousQueue<Order> orderQueue, Warehouse warehouse) {
+    public Baker(int id, SynchronousQueue<Order> orderQueue, Warehouse warehouse) {
         this(id, DEFAULT_EFFICIENCY, orderQueue, warehouse);
     }
 
-    public BakerImpl(int id, int efficiency, SynchronousQueue<Order> orderQueue, Warehouse warehouse) {
+    public Baker(int id, int efficiency, SynchronousQueue<Order> orderQueue, Warehouse warehouse) {
         this.id = id;
         this.bakingTimeInSeconds = 100 / efficiency;
         this.orderQueue = orderQueue;
@@ -35,7 +34,7 @@ public class BakerImpl implements Baker, Runnable {
 
     @Override
     public void run() {
-        while (!currentThread().isInterrupted()) {
+        while (!currentThread().isInterrupted() && !isSoftShutdown) {
             try {
                 Order order = orderQueue.take();
                 makeOrder(order);
@@ -46,7 +45,6 @@ public class BakerImpl implements Baker, Runnable {
         }
     }
 
-    @Override
     public void makeOrder(Order order) {
         int orderId = order.getId();
         int pizzaCount = order.getPizzaCount();

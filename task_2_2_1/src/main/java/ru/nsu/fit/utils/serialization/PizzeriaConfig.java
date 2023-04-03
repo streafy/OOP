@@ -1,8 +1,8 @@
-package ru.nsu.fit.serialization;
+package ru.nsu.fit.utils.serialization;
 
-import ru.nsu.fit.models.BakerModel;
-import ru.nsu.fit.models.CourierModel;
-import ru.nsu.fit.models.WarehouseModel;
+import ru.nsu.fit.utils.models.BakerModel;
+import ru.nsu.fit.utils.models.CourierModel;
+import ru.nsu.fit.utils.models.WarehouseModel;
 
 import java.util.List;
 
