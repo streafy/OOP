@@ -28,6 +28,7 @@ public class SnakeGameApplication extends Application {
         JavafxPresenter javafxPresenter = new JavafxPresenter(gameFieldView, snake);
 
         gameFieldView.renderSnake(snake.getSnakeLocation());
+        javafxPresenter.startGameLoop();
     }
 
     public static void main(String[] args) {

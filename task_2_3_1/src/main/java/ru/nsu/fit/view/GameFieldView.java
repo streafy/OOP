@@ -38,6 +38,15 @@ public class GameFieldView {
         }
     }
 
+    //TODO: change to not rerender all game field
+    public void renderGameField() {
+        for (int x = 0; x < DEFAULT_ROW_COUNT; x++) {
+            for (int y = 0; y < DEFAULT_COL_COUNT; y++) {
+                changeCellColor(x, y, Color.CADETBLUE);
+            }
+        }
+    }
+
     public void renderSnake(List<Point> snakeCoordinates) {
         snakeCoordinates.forEach(point ->  changeCellColor(point.x, point.y, Color.GREEN));
     }

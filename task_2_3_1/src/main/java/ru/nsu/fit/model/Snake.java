@@ -25,4 +25,14 @@ public class Snake {
     public List<Point> getSnakeLocation() {
         return snakeLocation;
     }
+
+    public void moveUp() {
+        snakeLocation.forEach(point -> {
+            if (point.y == 0) {
+                point.y = 9;
+            } else {
+                point.y--;
+            }
+        });
+    }
 }
