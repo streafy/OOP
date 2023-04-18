@@ -48,7 +48,7 @@ public class WarehouseImpl implements Warehouse {
     public synchronized Order giveOrder() {
         try {
             while (this.readyOrders.isEmpty()) {
-                super.wait();
+                wait();
             }
 
             Order givenOrder = this.readyOrders.poll();
