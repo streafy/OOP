@@ -12,6 +12,7 @@ import ru.nsu.fit.utils.serialization.PizzeriaConfig;
 
 import java.util.List;
 import java.util.concurrent.SynchronousQueue;
+import java.util.stream.Collectors;
 
 public class PizzeriaImpl implements Pizzeria {
 
@@ -29,17 +30,17 @@ public class PizzeriaImpl implements Pizzeria {
         this.bakers = config.getBakers()
                             .stream()
                             .map(bakerModel -> BakerConverter.convert(bakerModel, orderQueue, warehouse))
-                            .toList();
+                            .collect(Collectors.toList());
         this.couriers = config.getCouriers()
                               .stream()
                               .map(courierModel -> CourierConverter.convert(courierModel, warehouse))
-                              .toList();
+                              .collect(Collectors.toList());
         this.bakersThreads = bakers.stream()
                                    .map(Thread::new)
-                                   .toList();
+                                   .collect(Collectors.toList());
         this.couriersThreads = couriers.stream()
                                        .map(Thread::new)
-                                       .toList();
+                                       .collect(Collectors.toList());
         this.orderQueue = orderQueue;
     }
 
