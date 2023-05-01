@@ -5,25 +5,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="rootContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-       <HBox fx:id="gameFieldContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootContainer" fx:controller="ru.nsu.fit.presenter.JavafxPresenter" maxHeight="-Infinity"
+      maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0"
+      xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox fx:id="gameFieldContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+          xmlns:fx="http://javafx.com/fxml/1">
 
-       </HBox>
-      <VBox fx:id="gameInfoContainer" alignment="TOP_RIGHT" layoutX="500.0" prefHeight="500.0" prefWidth="300.0">
-         <children>
-            <Label fx:id="gameInfoLabel" alignment="TOP_LEFT" minWidth="300.0" text="Score:">
-               <font>
-                  <Font size="32.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-               </padding>
-            </Label>
-         </children>
-      </VBox>
-   </children>
+    </HBox>
+    <VBox fx:id="gameInfoContainer" alignment="TOP_RIGHT" layoutX="500.0" prefHeight="500.0" prefWidth="300.0">
+        <Label fx:id="gameInfoLabel" alignment="TOP_LEFT" minWidth="300.0" text="Score:">
+            <font>
+                <Font size="32.0"/>
+            </font>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+            <padding>
+                <Insets bottom="5.0" left="15.0" right="15.0" top="5.0"/>
+            </padding>
+        </Label>
+    </VBox>
 </Pane>

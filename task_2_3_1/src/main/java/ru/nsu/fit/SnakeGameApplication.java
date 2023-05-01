@@ -9,7 +9,6 @@ import ru.nsu.fit.model.Food;
 import ru.nsu.fit.model.Game;
 import ru.nsu.fit.model.Snake;
 import ru.nsu.fit.presenter.JavafxPresenter;
-import ru.nsu.fit.view.GameFieldView;
 
 import java.io.IOException;
 
@@ -19,6 +18,9 @@ public class SnakeGameApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SnakeGameApplication.class.getResource("/ru/nsu/fit/game-field-view.fxml"));
         Pane rootContainer = fxmlLoader.load();
+
+        JavafxPresenter javafxPresenter = fxmlLoader.getController();
+
         Scene scene = new Scene(rootContainer, 800, 500);
         stage.setTitle("SnakeGame");
         stage.setScene(scene);
@@ -26,13 +28,12 @@ public class SnakeGameApplication extends Application {
 
         Snake snake = new Snake();
         Food food = new Food();
-        Game game = new Game(10, 10, snake, food);
+        Game game = new Game(20, 20, snake, food);
 
-        GameFieldView gameFieldView = new GameFieldView(scene);
+        javafxPresenter.initGame(game);
+        //GameFieldView gameFieldView = new GameFieldView();
 
-        JavafxPresenter javafxPresenter = new JavafxPresenter(gameFieldView, game);
-
-        javafxPresenter.startGameLoop();
+        javafxPresenter.startGameLoop(scene);
     }
 
     public static void main(String[] args) {

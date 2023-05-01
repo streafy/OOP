@@ -5,5 +5,6 @@ module ru.nsu.fit {
 
 
     opens ru.nsu.fit to javafx.fxml;
+    opens ru.nsu.fit.presenter to javafx.fxml;
     exports ru.nsu.fit;
 }

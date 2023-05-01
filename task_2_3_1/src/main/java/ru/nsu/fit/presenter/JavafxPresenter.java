@@ -1,30 +1,52 @@
 package ru.nsu.fit.presenter;
 
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import ru.nsu.fit.model.Game;
 import ru.nsu.fit.model.Snake;
 import ru.nsu.fit.model.utils.GameStatus;
 import ru.nsu.fit.model.utils.SnakeDirection;
-import ru.nsu.fit.view.GameFieldView;
+import ru.nsu.fit.view.javafx.JavafxGameFieldView;
 
-public class JavafxPresenter implements Presenter {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    private final GameFieldView gameFieldView;
-    private final Game game;
+public class JavafxPresenter implements Presenter, Initializable {
+
+    private JavafxGameFieldView gameFieldView;
+    private Game game;
+
+    @FXML
+    private Pane rootContainer;
+    @FXML
+    private HBox gameFieldContainer;
+    @FXML
+    private VBox gameInfoContainer;
+    @FXML
+    private Label gameInfoLabel;
+
     private AnimationTimer timer;
-    private final Snake snake;
+    private Snake snake;
 
-    public JavafxPresenter(GameFieldView gameFieldView, Game game) {
-        this.gameFieldView = gameFieldView;
-        this.game = game;
-
-        snake = game.getSnake();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.gameFieldView = new JavafxGameFieldView(gameFieldContainer, gameInfoLabel);
     }
 
-    public void startGameLoop() {
-        gameFieldView.getScene()
-                     .setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
+    public void initGame(Game game) {
+        this.game = game;
+        this.snake = game.getSnake();
+    }
+
+    public void startGameLoop(Scene scene) {
+        scene.setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
 
         timer = new AnimationTimer() {
             private long lastUpdate = 0;
