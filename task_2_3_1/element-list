@@ -1,0 +1,8 @@
+module:ru.nsu.fit
+ru.nsu.fit
+ru.nsu.fit.model
+ru.nsu.fit.model.utils
+ru.nsu.fit.presenter
+ru.nsu.fit.view
+ru.nsu.fit.view.console
+ru.nsu.fit.view.javafx
