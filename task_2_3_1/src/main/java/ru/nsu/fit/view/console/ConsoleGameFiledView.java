@@ -24,8 +24,8 @@ public class ConsoleGameFiledView implements GameFieldView {
 
     @Override
     public void renderGameField(List<Point> snakeBody, Point food) {
-        for (int x = 0; x < colCount; x++) {
-            for (int y = 0; y < rowCount; y++) {
+        for (int x = 0; x < rowCount; x++) {
+            for (int y = 0; y < colCount; y++) {
                 Point point = new Point(x, y);
                 String pointSymbol = ".";
                 if (point.equals(food)) {
@@ -38,5 +38,14 @@ public class ConsoleGameFiledView implements GameFieldView {
             }
             System.out.println();
         }
+    }
+
+    public void showScore(int score) {
+        System.out.println("Score: " + score);
+    }
+
+    public void showGameOverScreen(int score) {
+        System.out.println("Game Over!");
+        System.out.println("Your Score: " + score);
     }
 }
