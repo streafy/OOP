@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import ru.nsu.fit.model.Food;
 import ru.nsu.fit.model.Game;
 import ru.nsu.fit.model.Snake;
 import ru.nsu.fit.model.utils.GameStatus;
@@ -38,6 +39,10 @@ public class JavafxPresenter implements Presenter, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.gameFieldView = new JavafxGameFieldView(gameFieldContainer, gameInfoLabel);
+
+        Food food = new Food();
+        this.snake = new Snake();
+        this.game = new Game(20, 20, snake, food);
     }
 
     public void initGame(Game game) {
@@ -63,6 +68,7 @@ public class JavafxPresenter implements Presenter, Initializable {
         timer.start();
     }
 
+    @Override
     public void updateGame() {
         if (game.getGameStatus() == GameStatus.GAME_OVER) {
             gameFieldView.showGameOverScreen(game.getScore());
@@ -72,16 +78,23 @@ public class JavafxPresenter implements Presenter, Initializable {
 
         gameFieldView.showScore(game.getScore());
         game.moveSnake();
-
         gameFieldView.renderGameField(snake.getBody(), game.getFood().getPoint());
     }
 
-    public void handleKeyPressed(KeyCode keyCode) {
+    private void handleKeyPressed(KeyCode keyCode) {
         switch (keyCode) {
-            case UP -> snake.setCurrentDirection(SnakeDirection.UP);
-            case DOWN -> snake.setCurrentDirection(SnakeDirection.DOWN);
-            case LEFT -> snake.setCurrentDirection(SnakeDirection.LEFT);
-            case RIGHT -> snake.setCurrentDirection(SnakeDirection.RIGHT);
+            case UP:
+                snake.setCurrentDirection(SnakeDirection.UP);
+                break;
+            case DOWN:
+                snake.setCurrentDirection(SnakeDirection.DOWN);
+                break;
+            case LEFT:
+                snake.setCurrentDirection(SnakeDirection.LEFT);
+                break;
+            case RIGHT:
+                snake.setCurrentDirection(SnakeDirection.RIGHT);
+                break;
         }
     }
 }

@@ -5,9 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import ru.nsu.fit.model.Food;
-import ru.nsu.fit.model.Game;
-import ru.nsu.fit.model.Snake;
 import ru.nsu.fit.presenter.JavafxPresenter;
 
 import java.io.IOException;
@@ -25,13 +22,6 @@ public class SnakeGameApplication extends Application {
         stage.setTitle("SnakeGame");
         stage.setScene(scene);
         stage.show();
-
-        Snake snake = new Snake();
-        Food food = new Food();
-        Game game = new Game(20, 20, snake, food);
-
-        javafxPresenter.initGame(game);
-        //GameFieldView gameFieldView = new GameFieldView();
 
         javafxPresenter.startGameLoop(scene);
     }
