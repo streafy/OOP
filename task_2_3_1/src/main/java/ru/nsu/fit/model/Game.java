@@ -77,6 +77,6 @@ public class Game {
 
     private Food getNewFood() {
         Random random = new Random();
-        return new Food(random.nextInt(1, gameFieldWidth - 1), random.nextInt(1, gameFieldHeight - 1));
+        return new Food(random.nextInt(gameFieldWidth - 2) + 1, random.nextInt(gameFieldHeight - 2) + 1);
     }
 }
