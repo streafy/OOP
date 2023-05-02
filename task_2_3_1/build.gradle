@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
+    id 'jacoco'
 }
 
 group 'ru.nsu.fit'
@@ -54,4 +55,10 @@ jlinkZip {
 
 tasks.register('prepareKotlinBuildScriptModel') {
 
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
 }
