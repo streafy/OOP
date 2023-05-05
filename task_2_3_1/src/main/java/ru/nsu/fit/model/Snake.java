@@ -9,7 +9,7 @@ import java.util.List;
 public class Snake {
 
     private static final int DEFAULT_SNAKE_SPAWN_COORDINATE_X = 4;
-    private static final int DEFAULT_SNAKE_SPAWN_COORDINATE_Y = 4;
+    private static final int DEFAULT_SNAKE_SPAWN_COORDINATE_Y = 8;
 
     private final List<Point> body = new ArrayList<>();
 

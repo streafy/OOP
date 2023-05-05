@@ -23,7 +23,8 @@ public class SnakeGameApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        javafxPresenter.startGameLoop(scene);
+        javafxPresenter.setScene(scene);
+        javafxPresenter.startGameLoop();
     }
 
     public static void main(String[] args) {

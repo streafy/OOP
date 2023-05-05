@@ -5,25 +5,46 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="rootContainer" fx:controller="ru.nsu.fit.presenter.JavafxPresenter" maxHeight="-Infinity"
-      maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0"
-      xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-    <HBox fx:id="gameFieldContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-          minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-          xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="rootContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.nsu.fit.presenter.JavafxPresenter">
+    <HBox fx:id="gameFieldContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     </HBox>
     <VBox fx:id="gameInfoContainer" alignment="TOP_RIGHT" layoutX="500.0" prefHeight="500.0" prefWidth="300.0">
         <Label fx:id="gameInfoLabel" alignment="TOP_LEFT" minWidth="300.0" text="Score:">
             <font>
-                <Font size="32.0"/>
+                <Font size="32.0" />
             </font>
             <VBox.margin>
-                <Insets/>
+                <Insets />
             </VBox.margin>
             <padding>
-                <Insets bottom="5.0" left="15.0" right="15.0" top="5.0"/>
+                <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
             </padding>
         </Label>
+        <Text text="Field Size">
+            <font>
+                <Font size="32.0" />
+            </font>
+         <VBox.margin>
+            <Insets right="150.0" />
+         </VBox.margin>
+
+        </Text>
+        <HBox>
+            <Button text="10x10" onAction="#onSetSmallGameFieldPressed">
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin></Button>
+            <Button text="20x20" onAction="#onSetMediumGameFieldPressed">
+            </Button>
+            <Button text="30x30" onAction="#onSetLargeGameFieldPressed">
+            </Button>
+        </HBox>
+
+        <Button fx:id="restartButton" onAction="#restartGame" text="Restart">
+            <VBox.margin>
+                <Insets right="125.0" top="35.0"/>
+            </VBox.margin>
+        </Button>
     </VBox>
 </Pane>

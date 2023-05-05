@@ -18,8 +18,8 @@ public class JavafxGameFieldView implements GameFieldView {
     private final HBox gameFieldContainer;
     private final Label gameInfoLabel;
 
-    private final int rowCount;
-    private final int colCount;
+    private int rowCount;
+    private int colCount;
 
     public JavafxGameFieldView(HBox gameFieldContainer, Label gameInfoLabel) {
         this(gameFieldContainer, gameInfoLabel, DEFAULT_ROW_COUNT, DEFAULT_COL_COUNT);
@@ -31,15 +31,15 @@ public class JavafxGameFieldView implements GameFieldView {
         this.gameFieldContainer = gameFieldContainer;
         this.gameInfoLabel = gameInfoLabel;
 
-        initGameField(rowCount, colCount);
+        initGameField(rowCount, colCount, 25);
     }
 
-    private void initGameField(int rowCount, int colCount) {
+    private void initGameField(int rowCount, int colCount, int cellSize) {
         for (int i = 0; i < colCount; i++) {
             VBox rowContainer = new VBox();
             gameFieldContainer.getChildren().add(rowContainer);
             for (int j = 0; j < rowCount; j++) {
-                Rectangle rectangle = new Rectangle(25, 25);
+                Rectangle rectangle = new Rectangle(cellSize, cellSize);
                 rectangle.setFill(Color.CADETBLUE);
                 rowContainer.getChildren().add(rectangle);
             }
@@ -73,5 +73,18 @@ public class JavafxGameFieldView implements GameFieldView {
 
     public void showGameOverScreen(int score) {
         gameInfoLabel.setText("Game Over!\nYour Score: " + score);
+    }
+
+    public void resize(int newWidth, int newHeight, int cellSize) {
+        gameFieldContainer.getChildren().forEach(row -> {
+            VBox r = (VBox) row;
+            r.getChildren().clear();
+        });
+        gameFieldContainer.getChildren().clear();
+
+        rowCount = newWidth;
+        colCount = newHeight;
+
+        initGameField(newWidth, newHeight, cellSize);
     }
 }
