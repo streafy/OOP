@@ -77,6 +77,12 @@ public class Game {
 
     private Food getNewFood() {
         Random random = new Random();
-        return new Food(random.nextInt(gameFieldWidth - 2) + 1, random.nextInt(gameFieldHeight - 2) + 1);
+        int x;
+        int y;
+        do {
+            x = random.nextInt(gameFieldWidth - 2) + 1;
+            y = random.nextInt(gameFieldHeight - 2) + 1;
+        } while (isBodyCollision(new Point(x, y)));
+        return new Food(x, y);
     }
 }
