@@ -37,7 +37,7 @@
             </HBox.margin></Button>
             <Button text="20x20" onAction="#onSetMediumGameFieldPressed">
             </Button>
-            <Button text="30x30" onAction="#onSetLargeGameFieldPressed">
+            <Button text="50x50" onAction="#onSetLargeGameFieldPressed">
             </Button>
         </HBox>
 
